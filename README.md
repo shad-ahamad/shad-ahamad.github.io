@@ -48,5 +48,5 @@ GitHub Pages (Hosting)
 LinkedIn: [Shad Ahamad](https://www.linkedin.com/in/shad-ahamad-b2a5751a1/)
 Facebook: https://www.facebook.com/ahamad.shad.77
 
-GitHub: @shad-ahamad
+GitHub: [shad-ahamad] (https://shad-ahamad.github.io/)
 
