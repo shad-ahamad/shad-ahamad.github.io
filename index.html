@@ -99,6 +99,12 @@
                     <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-lg"></i>
                     <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-lg hidden"></i>
                 </button>
+
+                <!-- Live Date and Time Display -->
+                <div id="live-datetime" class="hidden sm:flex flex-col text-right text-xs font-medium text-gray-700 dark:text-gray-300 leading-tight">
+                    <span id="current-date"></span>
+                    <span id="current-time"></span>
+                </div>
             </div>
         </div>
     </nav>
@@ -836,6 +842,22 @@
 
     <!-- Dark Mode & Modal Pop-out Script -->
     <script>
+        // --- Live Date & Time Logic ---
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Format Date (e.g., Jul 23, 2026)
+            const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+            document.getElementById('current-date').innerText = now.toLocaleDateString('en-US', dateOptions);
+            
+            // Format Time (e.g., 11:18:09 PM)
+            const timeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
+            document.getElementById('current-time').innerText = now.toLocaleTimeString('en-US', timeOptions);
+        }
+        
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
         // --- Dark Mode Logic ---
         const themeToggleBtn = document.getElementById('theme-toggle');
         const darkIcon = document.getElementById('theme-toggle-dark-icon');
@@ -847,8 +869,8 @@
             darkIcon.classList.add('hidden');
         } else {
             document.documentElement.classList.remove('dark');
-            darkIcon.classList.remove('hidden');
-            lightIcon.classList.add('hidden');
+            darkIcon.classList.add('hidden');
+            lightIcon.classList.remove('hidden');
         }
 
         themeToggleBtn.addEventListener('click', function() {
