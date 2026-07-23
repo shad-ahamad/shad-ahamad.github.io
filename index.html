@@ -299,7 +299,7 @@
         </div>
     </section>
 
-    <!-- Education & Leadership Activities Section (Strict 2x2 Grid Layout) -->
+    <!-- Education & Leadership Activities Section (Tree Branch & Hover Effect Structure) -->
     <section id="education" class="page-entrance opacity-0 py-16 max-w-6xl mx-auto px-6 border-t border-gray-200/60 dark:border-gray-800">
         <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
         <div class="w-full bg-cyan-500/20 dark:bg-cyan-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-cyan-500/30 dark:hover:bg-cyan-500/40 cursor-pointer">
@@ -308,54 +308,78 @@
             </h2>
         </div>
 
-        <!-- 2x2 Grid Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+        <!-- Tree Branch Structure for Education & Leadership -->
+        <div class="relative pl-4 md:pl-8 border-l-2 border-cyan-500/40 dark:border-cyan-400/40 space-y-8 mb-16">
             
-            <!-- Row 1, Col 1: Higher Education -->
-            <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex items-start gap-4">
-                <div class="w-12 h-12 bg-white dark:bg-gray-800 p-1 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
-                    <img src="kuet.png" alt="KUET Logo" class="max-h-full max-w-full object-contain">
-                </div>
-                <div>
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white">B.Sc. in Electronics and Communication Engineering</h3>
-                    <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Khulna University of Engineering & Technology (KUET)</p>
-                    <p class="text-xs text-black dark:text-white mt-1">Graduated: 2023 | Focus: Communication Systems, Circuit Design & Embedded Logic</p>
+            <!-- Card 1: KUET B.Sc. -->
+            <div class="relative pl-6">
+                <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
+                <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
+                    <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                        <img src="kuet.png" alt="KUET Logo" class="max-h-full max-w-full object-contain">
+                    </div>
+                    <div>
+                        <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">Graduated 2023</span>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">B.Sc. in Electronics and Communication Engineering</h3>
+                        <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Khulna University of Engineering & Technology (KUET)</p>
+                        <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">Focus: Communication Systems, Circuit Design & Embedded Logic.</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Row 1, Col 2: Secondary Education -->
-            <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex items-start gap-4">
-                <div class="w-12 h-12 bg-white dark:bg-gray-800 p-1 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
-                    <img src="rajuk.png" alt="Rajuk Uttara Model College Logo" class="max-h-full max-w-full object-contain">
-                </div>
-                <div>
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white">HSC & SSC (Science Stream)</h3>
-                    <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Rajuk Uttara Model College</p>
-                    <p class="text-xs text-black dark:text-white mt-1">HSC (2017): GPA 5.00 (Board Scholarship) | SSC (2015): GPA 5.00</p>
+            <!-- Card 2: Rajuk HSC & SSC -->
+            <div class="relative pl-6">
+                <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
+                <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
+                    <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                        <img src="rajuk.png" alt="Rajuk Uttara Model College Logo" class="max-h-full max-w-full object-contain">
+                    </div>
+                    <div>
+                        <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">2015 – 2017</span>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">HSC & SSC (Science Stream)</h3>
+                        <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Rajuk Uttara Model College</p>
+                        <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">HSC (2017): GPA 5.00 (Board Scholarship) | SSC (2015): GPA 5.00</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Row 2, Col 1: Leadership - KUET Radio -->
-            <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex items-start gap-4">
-                <div class="w-12 h-12 bg-white dark:bg-gray-800 p-1 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
-                    <img src="kuet radio.png" alt="KUET Radio Logo" class="max-h-full max-w-full object-contain">
-                </div>
-                <div>
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white">KUET Radio — Vice President & RJ</h3>
-                    <p class="text-xs text-cyan-600 dark:text-cyan-400 font-medium mb-1">Sep 2019 – Feb 2023</p>
-                    <p class="text-sm text-black dark:text-white">Led presenters and producers, designed campaigns increasing engagement by 300%, and coordinated partner sponsorships.</p>
+            <!-- Card 3: KUET Radio Vice President -->
+            <div class="relative pl-6">
+                <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
+                <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
+                    <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                        <img src="kuet radio.png" alt="KUET Radio Logo" class="max-h-full max-w-full object-contain">
+                    </div>
+                    <div>
+                        <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">Sep 2019 – Feb 2023</span>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">KUET Radio — Vice President & RJ</h3>
+                        <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Executive Leadership & Operations</p>
+                        <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">Led presenters and producers, designed campaigns increasing engagement by 300%, and coordinated partner sponsorships.</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Row 2, Col 2: Leadership - Musketeer Boyz -->
-            <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex items-start gap-4">
-                <div class="w-12 h-12 bg-white dark:bg-gray-800 p-1 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
-                    <img src="mb.png" alt="Musketeer Boyz Logo" class="max-h-full max-w-full object-contain">
-                </div>
-                <div>
-                    <h3 class="text-base font-bold text-gray-900 dark:text-white">Musketeer Boyz — Founding Member & Admin</h3>
-                    <p class="text-xs text-cyan-600 dark:text-cyan-400 font-medium mb-1">Dec 2017 – Present</p>
-                    <p class="text-sm text-black dark:text-white">Organized community service events, sports initiatives, and mentored youth in social leadership.</p>
+            <!-- Card 4: Musketeer Boyz -->
+            <div class="relative pl-6">
+                <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
+                <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
+                    <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                        <img src="mb.png" alt="Musketeer Boyz Logo" class="max-h-full max-w-full object-contain">
+                    </div>
+                    <div>
+                        <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">Dec 2017 – Present</span>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">Musketeer Boyz — Founding Member & Admin</h3>
+                        <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Community Service & Youth Empowerment</p>
+                        <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">Organized community service events, sports initiatives, and mentored youth in social leadership.</p>
+                    </div>
                 </div>
             </div>
 
@@ -419,7 +443,7 @@
         </div>
     </section>
 
-    <!-- Academic Projects Section (Strict 2x2 Grid Layout) -->
+    <!-- Academic Projects Section (Tree Branch & Hover Effect Structure) -->
     <section id="projects" class="page-entrance opacity-0 py-16 max-w-6xl mx-auto px-6 border-t border-gray-200/60 dark:border-gray-800">
         <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
         <div class="w-full bg-indigo-500/20 dark:bg-indigo-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-indigo-500/30 dark:hover:bg-indigo-500/40 cursor-pointer">
@@ -428,45 +452,85 @@
             </h2>
         </div>
 
-        <!-- 2x2 Grid Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Tree Branch Structure for Academic Projects -->
+        <div class="relative pl-4 md:pl-8 border-l-2 border-indigo-500/40 dark:border-indigo-400/40 space-y-8">
             
-            <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.01] hover:border-indigo-400 dark:hover:border-indigo-500">
-                <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2 py-1 rounded">2022 – 2023</span>
-                <h3 class="font-bold text-lg mt-2 mb-2 text-gray-900 dark:text-white">Brain-Computer Interface for Gamma (γ) Band Frequency</h3>
-                <p class="text-black dark:text-white text-sm leading-relaxed">
-                    Designed and simulated circuits in NI Multisim for gamma band frequency extraction from EEG signals. Conducted signal analysis to study brainwave patterns related to cognitive tasks and biomedical applications.
-                </p>
+            <!-- Project 1 Node -->
+            <div class="relative pl-6">
+                <!-- Branch Connector -->
+                <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-indigo-500/40 dark:bg-indigo-400/40"></div>
+                <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 cursor-default">
+                    <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">2022 – 2023</span>
+                    <h3 class="font-bold text-lg mt-3 mb-2 text-indigo-700 dark:text-indigo-300 flex items-center gap-2.5">
+                        <i class="fa-solid fa-brain text-indigo-600 dark:text-indigo-400 flex-shrink-0"></i>
+                        <span>Brain-Computer Interface for Gamma (&gamma;) Band Frequency</span>
+                    </h3>
+                    <p class="text-black dark:text-white text-sm leading-relaxed">
+                        Designed and simulated circuits in NI Multisim for gamma band frequency extraction from EEG signals. Conducted signal analysis to study brainwave patterns related to cognitive tasks and biomedical applications.
+                    </p>
+                </div>
             </div>
 
-            <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.01] hover:border-indigo-400 dark:hover:border-indigo-500">
-                <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2 py-1 rounded">2021 – 2022</span>
-                <h3 class="font-bold text-lg mt-2 mb-2 text-gray-900 dark:text-white">Arduino-Based Hand Gesture Control of Computer</h3>
-                <p class="text-black dark:text-white text-sm leading-relaxed">
-                    Implemented a computer control system using Arduino and hand gesture recognition. Integrated sensors to map hand motions into computer input commands in real-time.
-                </p>
+            <!-- Project 2 Node -->
+            <div class="relative pl-6">
+                <!-- Branch Connector -->
+                <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-indigo-500/40 dark:bg-indigo-400/40"></div>
+                <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 cursor-default">
+                    <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">2021 – 2022</span>
+                    <h3 class="font-bold text-lg mt-3 mb-2 text-indigo-700 dark:text-indigo-300 flex items-center gap-2.5">
+                        <i class="fa-solid fa-hand-sparkles text-indigo-600 dark:text-indigo-400 flex-shrink-0"></i>
+                        <span>Arduino-Based Hand Gesture Control of Computer</span>
+                    </h3>
+                    <p class="text-black dark:text-white text-sm leading-relaxed">
+                        Implemented a computer control system using Arduino and hand gesture recognition. Integrated sensors to map hand motions into computer input commands in real-time.
+                    </p>
+                </div>
             </div>
 
-            <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.01] hover:border-indigo-400 dark:hover:border-indigo-500">
-                <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2 py-1 rounded">2019 – 2020</span>
-                <h3 class="font-bold text-lg mt-2 mb-2 text-gray-900 dark:text-white">Microstrip Patch Antenna Design using CST</h3>
-                <p class="text-black dark:text-white text-sm leading-relaxed">
-                    Designed and simulated a microstrip patch antenna using CST Microwave Studio. Optimized parameters for improved gain, bandwidth, radiation patterns, and efficiency.
-                </p>
+            <!-- Project 3 Node -->
+            <div class="relative pl-6">
+                <!-- Branch Connector -->
+                <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-indigo-500/40 dark:bg-indigo-400/40"></div>
+                <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 cursor-default">
+                    <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">2019 – 2020</span>
+                    <h3 class="font-bold text-lg mt-3 mb-2 text-indigo-700 dark:text-indigo-300 flex items-center gap-2.5">
+                        <i class="fa-solid fa-tower-cell text-indigo-600 dark:text-indigo-400 flex-shrink-0"></i>
+                        <span>Microstrip Patch Antenna Design using CST</span>
+                    </h3>
+                    <p class="text-black dark:text-white text-sm leading-relaxed">
+                        Designed and simulated a microstrip patch antenna using CST Microwave Studio. Optimized parameters for improved gain, bandwidth, radiation patterns, and efficiency.
+                    </p>
+                </div>
             </div>
 
-            <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.01] hover:border-indigo-400 dark:hover:border-indigo-500">
-                <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2 py-1 rounded">2018 – 2019</span>
-                <h3 class="font-bold text-lg mt-2 mb-2 text-gray-900 dark:text-white">Power Supply, Generator & Filter Circuits</h3>
-                <p class="text-black dark:text-white text-sm leading-relaxed">
-                    Developed a variable DC power supply, function generator, 7-segment display circuit, and band-pass filter. Validated performance through simulation and hardware testing.
-                </p>
+            <!-- Project 4 Node -->
+            <div class="relative pl-6">
+                <!-- Branch Connector -->
+                <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-indigo-500/40 dark:bg-indigo-400/40"></div>
+                <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 cursor-default">
+                    <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">2018 – 2019</span>
+                    <h3 class="font-bold text-lg mt-3 mb-2 text-indigo-700 dark:text-indigo-300 flex items-center gap-2.5">
+                        <i class="fa-solid fa-bolt text-indigo-600 dark:text-indigo-400 flex-shrink-0"></i>
+                        <span>Power Supply, Generator & Filter Circuits</span>
+                    </h3>
+                    <p class="text-black dark:text-white text-sm leading-relaxed">
+                        Developed a variable DC power supply, function generator, 7-segment display circuit, and band-pass filter. Validated performance through simulation and hardware testing.
+                    </p>
+                </div>
             </div>
 
         </div>
     </section>
 
-    <!-- Certifications Section -->
+    <!-- Certifications Section (Tree Branch & Individual Card Layout) -->
     <section id="certifications" class="page-entrance opacity-0 py-16 max-w-6xl mx-auto px-6 border-t border-gray-200/60 dark:border-gray-800">
         <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
         <div class="w-full bg-purple-500/20 dark:bg-purple-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-purple-500/30 dark:hover:bg-purple-500/40 cursor-pointer">
@@ -475,67 +539,123 @@
             </h2>
         </div>
 
-        <div class="bg-purple-50/80 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/50 p-6 rounded-xl transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:scale-[1.005]">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-black dark:text-white mb-8">
-                <div>• <strong>Introduction to Supply Chain Management</strong> – Simplilearn & SkillUp (2025)</div>
-                <div>• <strong>Fundamentals of Cybersecurity</strong> – upGrad (2025)</div>
-                <div>• <strong>Cyber Hygiene Online Training</strong> – The Asia Foundation & SAJIDA Foundation (2025)</div>
-                <div>• <strong>Learn CCNA 200-301 Network Fundamentals</strong> – Simplilearn & SkillUp (2024)</div>
+        <!-- Tree Branch Structure for Individual Certificate Cards -->
+        <div class="relative pl-4 md:pl-8 border-l-2 border-purple-500/40 dark:border-purple-400/40 space-y-8 mb-12">
+            
+            <!-- Cert Card 1 -->
+            <div class="relative pl-6">
+                <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-purple-500/40 dark:bg-purple-400/40"></div>
+                <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400"></div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-purple-400 dark:hover:border-purple-500 cursor-default">
+                    <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">2025</span>
+                    <h3 class="font-bold text-lg mt-3 mb-1 text-purple-700 dark:text-purple-300 flex items-center gap-2.5">
+                        <i class="fa-solid fa-truck-ramp-box text-purple-600 dark:text-purple-400 flex-shrink-0"></i>
+                        <span>Introduction to Supply Chain Management</span>
+                    </h3>
+                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Simplilearn & SkillUp</p>
+                </div>
             </div>
 
-            <!-- Auto-Scrollable Certificates Carousel -->
-            <div class="relative overflow-hidden rounded-lg bg-white/60 dark:bg-gray-900/60 p-4 border border-purple-100 dark:border-purple-900/40">
-                <div class="animate-scroll gap-6">
-                    <!-- First Set of 4 Images -->
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                        <img src="scm.png" alt="Supply Chain Management" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">Supply Chain Management</span>
-                        </div>
-                    </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                        <img src="cybersc.png" alt="Cyber Security" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">Cyber Security</span>
-                        </div>
-                    </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                        <img src="cyberhg.png" alt="Cyber Hygiene" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">Cyber Hygiene</span>
-                        </div>
-                    </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                        <img src="ccna.png" alt="CCNA Fundamentals" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">CCNA Fundamentals</span>
-                        </div>
-                    </div>
+            <!-- Cert Card 2 -->
+            <div class="relative pl-6">
+                <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-purple-500/40 dark:bg-purple-400/40"></div>
+                <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400"></div>
 
-                    <!-- Duplicate Set for Seamless Infinite Loop -->
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                        <img src="scm.png" alt="Supply Chain Management" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">Supply Chain Management</span>
-                        </div>
+                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-purple-400 dark:hover:border-purple-500 cursor-default">
+                    <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">2025</span>
+                    <h3 class="font-bold text-lg mt-3 mb-1 text-purple-700 dark:text-purple-300 flex items-center gap-2.5">
+                        <i class="fa-solid fa-shield-halved text-purple-600 dark:text-purple-400 flex-shrink-0"></i>
+                        <span>Fundamentals of Cybersecurity</span>
+                    </h3>
+                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">upGrad</p>
+                </div>
+            </div>
+
+            <!-- Cert Card 3 -->
+            <div class="relative pl-6">
+                <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-purple-500/40 dark:bg-purple-400/40"></div>
+                <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400"></div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-purple-400 dark:hover:border-purple-500 cursor-default">
+                    <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">2025</span>
+                    <h3 class="font-bold text-lg mt-3 mb-1 text-purple-700 dark:text-purple-300 flex items-center gap-2.5">
+                        <i class="fa-solid fa-user-shield text-purple-600 dark:text-purple-400 flex-shrink-0"></i>
+                        <span>Cyber Hygiene Online Training</span>
+                    </h3>
+                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">The Asia Foundation & SAJIDA Foundation</p>
+                </div>
+            </div>
+
+            <!-- Cert Card 4 -->
+            <div class="relative pl-6">
+                <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-purple-500/40 dark:bg-purple-400/40"></div>
+                <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400"></div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-purple-400 dark:hover:border-purple-500 cursor-default">
+                    <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">2024</span>
+                    <h3 class="font-bold text-lg mt-3 mb-1 text-purple-700 dark:text-purple-300 flex items-center gap-2.5">
+                        <i class="fa-solid fa-network-wired text-purple-600 dark:text-purple-400 flex-shrink-0"></i>
+                        <span>Learn CCNA 200-301 Network Fundamentals</span>
+                    </h3>
+                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Simplilearn & SkillUp</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Auto-Scrollable Certificates Carousel -->
+        <div class="relative overflow-hidden rounded-lg bg-white/60 dark:bg-gray-900/60 p-4 border border-purple-100 dark:border-purple-900/40">
+            <div class="animate-scroll gap-6">
+                <!-- First Set of 4 Images -->
+                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
+                    <img src="scm.png" alt="Supply Chain Management" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                        <span class="text-white font-medium text-xs md:text-sm">Supply Chain Management</span>
                     </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                        <img src="cybersc.png" alt="Cyber Security" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">Cyber Security</span>
-                        </div>
+                </div>
+                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
+                    <img src="cybersc.png" alt="Cyber Security" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                        <span class="text-white font-medium text-xs md:text-sm">Cyber Security</span>
                     </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                        <img src="cyberhg.png" alt="Cyber Hygiene" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">Cyber Hygiene</span>
-                        </div>
+                </div>
+                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
+                    <img src="cyberhg.png" alt="Cyber Hygiene" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                        <span class="text-white font-medium text-xs md:text-sm">Cyber Hygiene</span>
                     </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                        <img src="ccna.png" alt="CCNA Fundamentals" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">CCNA Fundamentals</span>
-                        </div>
+                </div>
+                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
+                    <img src="ccna.png" alt="CCNA Fundamentals" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                        <span class="text-white font-medium text-xs md:text-sm">CCNA Fundamentals</span>
+                    </div>
+                </div>
+
+                <!-- Duplicate Set for Seamless Infinite Loop -->
+                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
+                    <img src="scm.png" alt="Supply Chain Management" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                        <span class="text-white font-medium text-xs md:text-sm">Supply Chain Management</span>
+                    </div>
+                </div>
+                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
+                    <img src="cybersc.png" alt="Cyber Security" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                        <span class="text-white font-medium text-xs md:text-sm">Cyber Security</span>
+                    </div>
+                </div>
+                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
+                    <img src="cyberhg.png" alt="Cyber Hygiene" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                        <span class="text-white font-medium text-xs md:text-sm">Cyber Hygiene</span>
+                    </div>
+                </div>
+                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
+                    <img src="ccna.png" alt="CCNA Fundamentals" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                        <span class="text-white font-medium text-xs md:text-sm">CCNA Fundamentals</span>
                     </div>
                 </div>
             </div>
