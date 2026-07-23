@@ -171,7 +171,8 @@
                 <div class="absolute -left-[17px] top-3.5 w-4 h-0.5 bg-emerald-500/40 dark:bg-emerald-400/40"></div>
                 <div class="absolute -left-[21px] top-2.5 w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400"></div>
 
-                <div class="bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 p-6 rounded-xl shadow-sm mb-4">
+                <!-- Card Container with Hover Effect added -->
+                <div class="bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 p-6 rounded-xl shadow-sm mb-4 transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-emerald-400 dark:hover:border-emerald-500 cursor-default">
                     <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-2">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-white dark:bg-gray-700 p-2 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -241,57 +242,57 @@
             
             <!-- Cell 1: Product & Operations -->
             <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-400">
-                <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center gap-2 mb-3">
+                <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center gap-2 mb-4">
                     <i class="fa-solid fa-boxes-packing text-red-600 dark:text-red-400"></i> Product & Operations
                 </h3>
-                <ul class="list-disc list-inside space-y-1.5 text-sm text-black dark:text-white">
-                    <li>Product Lifecycle Management (PLM)</li>
-                    <li>Supply Chain Management (SCM)</li>
-                    <li>Production Workflow Optimization</li>
-                    <li>Sales & Inventory Data Analysis</li>
-                    <li>Tender Compliance (e-GP)</li>
-                    <li>PSI (Pre-Shipment Inspection)</li>
+                <ul class="space-y-2.5 text-sm text-black dark:text-white">
+                    <li class="flex items-center"><i class="fa-solid fa-arrows-spin text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Product Lifecycle Management (PLM)</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-truck-ramp-box text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Supply Chain Management (SCM)</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-chart-line text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Production Workflow Optimization</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-square-poll-vertical text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Sales & Inventory Data Analysis</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-file-contract text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Tender Compliance (e-GP)</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-clipboard-check text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>PSI (Pre-Shipment Inspection)</span></li>
                 </ul>
             </div>
 
             <!-- Cell 2: Software & Tools -->
             <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-400">
-                <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center gap-2 mb-3">
+                <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center gap-2 mb-4">
                     <i class="fa-solid fa-laptop-code text-red-600 dark:text-red-400"></i> Software & Tools
                 </h3>
-                <ul class="list-disc list-inside space-y-1.5 text-sm text-black dark:text-white">
-                    <li>ERP (Oracle, EBS, HRMS)</li>
-                    <li>MS Excel (Advanced), Word, PowerPoint</li>
-                    <li>NI Multisim & CST Microwave Studio</li>
-                    <li>Cisco Packet Tracer</li>
-                    <li>Google Sheets, Gmail & Outlook</li>
-                    <li>AI Tools & File Management Tools</li>
+                <ul class="space-y-2.5 text-sm text-black dark:text-white">
+                    <li class="flex items-center"><i class="fa-solid fa-database text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>ERP (Oracle, EBS, HRMS)</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-file-excel text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>MS Excel (Advanced), Word, PowerPoint</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-wave-square text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>NI Multisim & CST Microwave Studio</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-network-wired text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Cisco Packet Tracer</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-envelope-open-text text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Google Sheets, Gmail & Outlook</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-robot text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>AI Tools & File Management Tools</span></li>
                 </ul>
             </div>
 
             <!-- Cell 3: Technical Engineering -->
             <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-400">
-                <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center gap-2 mb-3">
+                <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center gap-2 mb-4">
                     <i class="fa-solid fa-microchip text-red-600 dark:text-red-400"></i> Technical Engineering
                 </h3>
-                <ul class="list-disc list-inside space-y-1.5 text-sm text-black dark:text-white">
-                    <li>Product Development</li>
-                    <li>Electronics & Circuit Design</li>
-                    <li>Basic Networking & IT Troubleshooting</li>
-                    <li>Market Research & Competitive Analysis</li>
+                <ul class="space-y-2.5 text-sm text-black dark:text-white">
+                    <li class="flex items-center"><i class="fa-solid fa-lightbulb text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Product Development</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-microchip text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Electronics & Circuit Design</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-wrench text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Basic Networking & IT Troubleshooting</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-magnifying-glass-chart text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Market Research & Competitive Analysis</span></li>
                 </ul>
             </div>
 
             <!-- Cell 4: Professional Attributes -->
             <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-400">
-                <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center gap-2 mb-3">
+                <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center gap-2 mb-4">
                     <i class="fa-solid fa-user-check text-red-600 dark:text-red-400"></i> Professional Attributes
                 </h3>
-                <ul class="list-disc list-inside space-y-1.5 text-sm text-black dark:text-white">
-                    <li>Team Leadership & Results-Driven</li>
-                    <li>Time Management & Critical Thinking</li>
-                    <li>Collaborative & Effective Communication</li>
-                    <li>Analytical Ability & Quick Learning</li>
+                <ul class="space-y-2.5 text-sm text-black dark:text-white">
+                    <li class="flex items-center"><i class="fa-solid fa-users text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Team Leadership & Results-Driven</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-clock text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Time Management & Critical Thinking</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-comments text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Collaborative & Effective Communication</span></li>
+                    <li class="flex items-center"><i class="fa-solid fa-brain text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i><span>Analytical Ability & Quick Learning</span></li>
                 </ul>
             </div>
 
