@@ -53,24 +53,70 @@
 
         .dark .tech-bg {
             background-color: #0f172a;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280' viewBox='0 0 280 280'%3E%3Cpath d='M30 0v60l30 30h50l30-30V0M60 90v50l-30 30v90M150 0v30l-50 50v60l30 30h70M180 280v-50l30-30V110l30-30V0M0 130h30l30 30v50' stroke='%2360a5fa' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round' opacity='0.08'/%3E%3Ccircle cx='60' cy='90' r='3' fill='%2360a5fa' opacity='0.10'/%3E%3Ccircle cx='150' cy='30' r='3' fill='%2360a5fa' opacity='0.10'/%3E%3Ccircle cx='180' cy='230' r='3' fill='%2360a5fa' opacity='0.10'/%3E%3Ccircle cx='30' cy='130' r='3' fill='none' stroke='%2360a5fa' stroke-width='1.2' opacity='0.10'/%3E%3Ccircle cx='210' cy='110' r='3' fill='none' stroke='%2360a5fa' stroke-width='1.2' opacity='0.10'/%3E%3Crect x='105' y='75' width='7' height='7' fill='%2360a5fa' opacity='0.10'/%3E%3Crect x='222' y='182' width='7' height='7' fill='%2360a5fa' opacity='0.10'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280' viewBox='0 0 280 280'%3E%3Cpath d='M30 0v60l30 30h50l30-30V0M60 90v50l-30 30v90M150 0v30l-50 50v60l30 30h70M180 280v-50l30-30V110l30-30V0M0 130h30l30 30v50' stroke='%2360a5fa' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round' opacity='0.08'/%3E%3Ccircle cx='60' cy='90' r='3' fill='%2360a5fa' opacity='0.10'/%3E%3Ccircle cx='150' cy='30' r='3' fill='%2360a5fa' opacity='0.10'/%3E%3Ccircle cx='180' cy='230' r='3' fill='%2360a5fa' opacity='0.10'/%3E%3Ccircle cx='30' cy='130' r='3' fill='none' stroke='%2360a5fa' stroke-width='1.2' opacity='0.10'/%3E%3Ccircle cx='210' cy='110' r='3' fill='none' stroke='%2360a5fa' stroke-width='1.2' opacity='0.10'/%3E%3Crect x='105' y='75' width='7' height='7' fill='%2360a5fa' opacity='0.10'/%3E%3Crect x='222' y='182' width='7' height='7' fill='%232563eb' opacity='0.10'/%3E%3C/svg%3E");
         }
 
-        /* Infinite horizontal scroll animation */
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        /* Scroll containers with drag support */
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: auto;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
-        .animate-scroll {
+        .scroll-container.active {
+            cursor: grabbing;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scroll-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .scroll-content {
             display: flex;
             width: max-content;
-            animation: scroll 20s linear infinite;
         }
 
-        /* Pause auto-scroll on hover */
-        .animate-scroll:hover {
-            animation-play-state: paused;
+        /* Glowing Red in Light Mode / Yellow in Dark Mode Light Bulb Animation */
+        @keyframes bulbGlowLight {
+            0%, 100% {
+                color: #ef4444; /* Soft Red */
+                filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.4));
+                transform: scale(1);
+            }
+            50% {
+                color: #f87171; /* Brighter Warm Red */
+                filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.7));
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes bulbGlowDark {
+            0%, 100% {
+                color: #facc15; /* Soft Yellow */
+                filter: drop-shadow(0 0 3px rgba(250, 204, 21, 0.4));
+                transform: scale(1);
+            }
+            50% {
+                color: #fef08a; /* Soft Light Yellow */
+                filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.7));
+                transform: scale(1.08);
+            }
+        }
+
+        .bulb-glow-icon {
+            animation: bulbGlowLight 3s infinite ease-in-out;
+        }
+
+        .dark .bulb-glow-icon {
+            animation: bulbGlowDark 3s infinite ease-in-out;
         }
     </style>
 </head>
@@ -79,10 +125,15 @@
     <!-- Navigation -->
     <nav class="page-entrance opacity-0 fixed w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm border-b border-gray-200/60 dark:border-gray-800 z-50 transition-colors duration-300">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Nav Title with Hover Zoom -->
-            <a href="#" class="text-xl font-bold text-blue-700 dark:text-blue-400 tracking-wide inline-block transition-transform duration-300 hover:scale-110 origin-left hover:text-blue-600 dark:hover:text-blue-300">Shad Ahamad</a>
+            <!-- Nav Title with Glowing Light Bulb Icon -->
+            <div class="flex items-center gap-1.5">
+                <button id="dashboard-toggle-nav" type="button" onclick="toggleDashboard()" class="focus:outline-none transition-transform hover:scale-125 text-xl flex items-center justify-center mr-1" title="Impactful Portfolio Dashboard">
+                    <i class="fa-solid fa-lightbulb bulb-glow-icon"></i>
+                </button>
+                <a href="#" class="text-xl font-bold text-blue-700 dark:text-blue-400 tracking-wide inline-block transition-transform duration-300 hover:scale-105 origin-left hover:text-blue-600 dark:hover:text-blue-300">Shad Ahamad</a>
+            </div>
             
-            <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-4 md:space-x-6">
                 <!-- Nav Links styled in matching transparent banner pills with unchanged pop-out hover effect -->
                 <div class="hidden md:flex space-x-3 text-xs font-semibold">
                     <a href="#about" class="inline-block px-3 py-1.5 rounded-lg bg-blue-500/15 dark:bg-blue-500/25 border border-blue-500/30 text-blue-800 dark:text-blue-300 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:shadow-md hover:bg-blue-500/30 dark:hover:bg-blue-500/40">About</a>
@@ -100,14 +151,150 @@
                     <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-lg hidden"></i>
                 </button>
 
-                <!-- Live Date and Time Display -->
-                <div id="live-datetime" class="hidden sm:flex flex-col text-right text-xs font-medium text-gray-700 dark:text-gray-300 leading-tight">
-                    <span id="current-date"></span>
-                    <span id="current-time"></span>
+                <!-- Modern Live Date and Time Display Card -->
+                <div id="live-datetime" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gray-100/90 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 shadow-sm transition-all duration-300 hover:shadow-md">
+                    <i class="fa-regular fa-clock text-yellow-500 dark:text-yellow-400 text-sm"></i>
+                    <div class="flex flex-col text-right text-xs md:text-sm font-semibold tracking-wide text-gray-800 dark:text-gray-200 leading-tight">
+                        <span id="current-date"></span>
+                        <span id="current-time" class="text-blue-600 dark:text-blue-400 font-bold"></span>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- Impactful Portfolio Highlights Dashboard Overlay -->
+    <div id="dashboard-modal" onclick="closeDashboardOnOutsideClick(event)" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-lg flex items-center justify-center p-4 md:p-8 transition-opacity duration-300">
+        <div class="relative w-full max-w-5xl max-h-[90vh] bg-white/95 dark:bg-gray-900/95 border border-amber-400/50 dark:border-amber-500/50 rounded-2xl shadow-2xl overflow-y-auto p-6 md:p-10 flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between pb-6 mb-6 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-lightbulb bulb-glow-icon"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-wide uppercase">Impact Highlights & Key Achievements</h2>
+                        <p class="text-xs text-amber-600 dark:text-amber-400 font-medium">Curated high-value skills, operational metrics & career milestones</p>
+                    </div>
+                </div>
+                <button onclick="toggleDashboard()" class="text-gray-500 hover:text-amber-500 text-3xl font-bold transition-transform hover:rotate-90">
+                    &times;
+                </button>
+            </div>
+
+            <!-- High Value Skills Section inside Dashboard -->
+            <div class="mb-8 p-5 bg-gradient-to-r from-amber-500/10 via-red-500/10 to-amber-500/10 border border-amber-500/30 rounded-xl">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
+                    <i class="fa-solid fa-star text-amber-500"></i> High Value Skills
+                </h3>
+                <div class="flex flex-wrap gap-2 text-xs font-semibold">
+                    <span class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-900 dark:text-amber-200 border border-amber-500/30">Product Lifecycle Management (PLM)</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-900 dark:text-amber-200 border border-amber-500/30">Supply Chain Management (SCM)</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-900 dark:text-amber-200 border border-amber-500/30">Oracle EBS & ERP</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-900 dark:text-amber-200 border border-amber-500/30">Sales & Inventory Data Analytics</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-900 dark:text-amber-200 border border-amber-500/30">e-GP Tender Compliance</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-900 dark:text-amber-200 border border-amber-500/30">Pre-Shipment Inspection (PSI)</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-900 dark:text-amber-200 border border-amber-500/30">Production Workflow Optimization</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-900 dark:text-amber-200 border border-amber-500/30">CST & NI Multisim Engineering</span>
+                </div>
+            </div>
+
+            <!-- Impact Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Card 1 -->
+                <div class="group p-5 rounded-xl bg-slate-50 dark:bg-gray-800/80 border border-emerald-500/30 hover:border-emerald-500 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">100% Efficiency</span>
+                        <i class="fa-solid fa-truck-fast text-emerald-500 text-lg group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-2">On-Time Priority Order Delivery</h3>
+                    <p class="text-xs text-black dark:text-gray-300 leading-relaxed">Coordinated suppliers, planners, and factory personnel to hit a 100% on-time delivery record for priority enterprise orders at Walton Digi-Tech.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group p-5 rounded-xl bg-slate-50 dark:bg-gray-800/80 border border-blue-500/30 hover:border-blue-500 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-blue-500/15 text-blue-700 dark:text-blue-300">+20% Productivity</span>
+                        <i class="fa-solid fa-chart-line text-blue-500 text-lg group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-2">Workflow & Resource Optimization</h3>
+                    <p class="text-xs text-black dark:text-gray-300 leading-relaxed">Optimized production line workflows and workforce allocation, boosting machine and personnel utilization by 20%.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group p-5 rounded-xl bg-slate-50 dark:bg-gray-800/80 border border-purple-500/30 hover:border-purple-500 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-purple-500/15 text-purple-700 dark:text-purple-300">Quality Control</span>
+                        <i class="fa-solid fa-shield-check text-purple-500 text-lg group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-2">25% Defect Rate Reduction</h3>
+                    <p class="text-xs text-black dark:text-gray-300 leading-relaxed">Spearheaded product failure analysis and root-cause troubleshooting, reducing manufacturing defects by 25% across networking lines.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="group p-5 rounded-xl bg-slate-50 dark:bg-gray-800/80 border border-amber-500/30 hover:border-amber-500 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-700 dark:text-amber-300">Product Launch</span>
+                        <i class="fa-solid fa-wifi text-amber-500 text-lg group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-2">Wi-Fi 6 & Smart IoT Hardware</h3>
+                    <p class="text-xs text-black dark:text-gray-300 leading-relaxed">Led feature specifications and market execution for 3 major product rollouts including Wi-Fi 6 Routers, LTE Routers, and Smartwatches.</p>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="group p-5 rounded-xl bg-slate-50 dark:bg-gray-800/80 border border-cyan-500/30 hover:border-cyan-500 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-cyan-500/15 text-cyan-700 dark:text-cyan-300">ERP & SCM</span>
+                        <i class="fa-solid fa-database text-cyan-500 text-lg group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-2">Oracle EBS & Data Analytics</h3>
+                    <p class="text-xs text-black dark:text-gray-300 leading-relaxed">Expert in managing BOMs, live inventory, and multi-channel sales data using enterprise Oracle ERP systems for data-backed strategy.</p>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="group p-5 rounded-xl bg-slate-50 dark:bg-gray-800/80 border border-red-500/30 hover:border-red-500 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-red-500/15 text-red-700 dark:text-red-300">Academic Honors</span>
+                        <i class="fa-solid fa-award text-red-500 text-lg group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-2">KUET ECE 1st Class & Scholarship</h3>
+                    <p class="text-xs text-black dark:text-gray-300 leading-relaxed">Graduated with 1st Class Honours in ECE from KUET and recipient of the prestigious HSC Government Board Scholarship.</p>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="group p-5 rounded-xl bg-slate-50 dark:bg-gray-800/80 border border-indigo-500/30 hover:border-indigo-500 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-indigo-500/15 text-indigo-700 dark:text-indigo-300">+300% Growth</span>
+                        <i class="fa-solid fa-radio text-indigo-500 text-lg group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-2">KUET Radio Leadership</h3>
+                    <p class="text-xs text-black dark:text-gray-300 leading-relaxed">Served as Vice President, steering cross-functional media teams and driving audience engagement up by 300% through targeted campaigns.</p>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="group p-5 rounded-xl bg-slate-50 dark:bg-gray-800/80 border border-teal-500/30 hover:border-teal-500 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-teal-500/15 text-teal-700 dark:text-teal-300">Compliance</span>
+                        <i class="fa-solid fa-file-contract text-teal-500 text-lg group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-2">Tender Compliance & e-GP</h3>
+                    <p class="text-xs text-black dark:text-gray-300 leading-relaxed">Experienced in government/private e-GP tender compliance and Pre-Shipment Inspection (PSI) for seamless commercial clearance.</p>
+                </div>
+
+                <!-- Card 9 -->
+                <div class="group p-5 rounded-xl bg-slate-50 dark:bg-gray-800/80 border border-rose-500/30 hover:border-rose-500 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-rose-500/15 text-rose-700 dark:text-rose-300">Engineering</span>
+                        <i class="fa-solid fa-brain text-rose-500 text-lg group-hover:scale-125 transition-transform"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 dark:text-white text-base mb-2">BCI & RF Antenna Simulation</h3>
+                    <p class="text-xs text-black dark:text-gray-300 leading-relaxed">Proficient in signal processing, CST Microwave Studio antenna optimization, and NI Multisim circuit design.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <!-- Hero Section with Photo -->
     <section id="about" class="page-entrance opacity-0 pt-32 pb-16 md:pt-40 md:pb-24 max-w-6xl mx-auto px-6">
@@ -115,53 +302,58 @@
             <!-- Left Text Content -->
             <div class="max-w-2xl w-full">
                 
-                <!-- Single Unified Hover Group for Header & Subtitle -->
-                <div class="group inline-block cursor-pointer transition-all duration-300 origin-left hover:scale-105 mb-6">
-                    <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white mt-2 mb-1 leading-tight transition-colors duration-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                <!-- Centered Name Box Header -->
+                <div class="w-full bg-blue-500/20 dark:bg-blue-500/30 py-3 mb-6 text-center rounded-xl border border-blue-500/30 shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-blue-500/30 dark:hover:bg-blue-500/40 cursor-pointer">
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-blue-900 dark:text-blue-300 tracking-tight uppercase">
                         Shad Ahamad
                     </h1>
-                    <div>
-                        <span class="text-blue-600 dark:text-blue-400 font-semibold text-sm tracking-widest uppercase transition-colors duration-300 group-hover:text-blue-800 dark:group-hover:text-blue-300">
-                            B.Sc. in ECE | KUET
-                        </span>
-                    </div>
                 </div>
 
                 <!-- Italicized Summary Section inside Translucent Hover Card -->
-                <div class="bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 p-6 rounded-xl shadow-sm mb-6 transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-blue-400 dark:hover:border-blue-500 cursor-default">
-                    <p class="text-lg italic text-black dark:text-white leading-relaxed">
-                        A motivated ECE graduate with hands-on experience in ERP-based operations, supply chain management, production planning, inventory control, and sales data analysis in the consumer electronics industry. Proven ability to drive production efficiency, improve quality, and launch successful products by collaborating with cross-functional teams.
+                <div class="bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 p-6 rounded-xl shadow-sm mb-6 text-center transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-blue-400 dark:hover:border-blue-500 cursor-default">
+                    <p class="text-s italic text-black dark:text-white leading-relaxed">
+                        "A motivated ECE graduate from KUET with hands-on experience in ERP-based operations, supply chain management, production planning, inventory control, and sales data analysis in the consumer electronics industry. Proven ability to drive production efficiency, improve quality, and launch successful products by collaborating with cross-functional teams."
                     </p>
                 </div>
 
-                <!-- Contact Details Banner Card matching size and hover style of about card -->
-                <div class="bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 p-4 rounded-xl shadow-sm mb-8 transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-blue-400 dark:hover:border-blue-500 flex flex-wrap items-center justify-between gap-4 text-sm text-black dark:text-white">
-                    <span class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-blue-600 dark:text-blue-400"></i> Lalmati, Gazipur-1700, Bangladesh</span>
-					
-                    <a href="mailto:ahamadshad07@gmail.com" class="group/email flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-105 inline-flex">
-                        <i class="fa-solid fa-envelope text-blue-600 dark:text-blue-400 transition-colors duration-300 group-hover/email:text-blue-700 dark:group-hover/email:text-blue-300"></i>
-                        <span>ahamadshad07@gmail.com</span>
-                    </a>
-
-                    <span class="flex items-center gap-2"><i class="fa-solid fa-phone text-blue-600 dark:text-blue-400"></i> +880-1725007360</span>
-                </div>
-
-                <div class="flex flex-wrap gap-4">
-                    <a href="#contact" class="bg-blue-600/20 dark:bg-blue-600/30 border border-blue-600/40 text-blue-800 dark:text-blue-300 font-semibold px-6 py-3 rounded-lg shadow-sm transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-lg hover:bg-blue-600/30 dark:hover:bg-blue-600/40">
-                        Get in Touch
-                    </a>
-                    <a href="#experience" class="bg-white/70 dark:bg-gray-800/70 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 text-black dark:text-white font-medium px-6 py-3 rounded-lg shadow-sm transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-lg">
-                        View Experience
-                    </a>
+                <!-- Contact Details Banner Card containing balanced 2-row layout -->
+                <div class="bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 p-5 rounded-xl shadow-sm mb-8 transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-blue-400 dark:hover:border-blue-500 flex flex-col gap-4 text-sm text-black dark:text-white">
+                    <!-- Row 1: Balanced 3-column contact info -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 items-center text-center">
+                        <span class="flex items-center justify-center gap-2"><i class="fa-solid fa-location-dot text-blue-600 dark:text-blue-400"></i> Lalmati, Gazipur-1700</span>
+                        <span class="flex items-center justify-center gap-2"><i class="fa-solid fa-phone text-blue-600 dark:text-blue-400"></i> +880-1725007360</span>
+                        <span class="flex items-center justify-center gap-2"><i class="fa-solid fa-envelope text-blue-600 dark:text-blue-400"></i> ahamadshad07@gmail.com</span>
+                    </div>
+                    <hr class="border-gray-200 dark:border-gray-700 my-1">
+                    <!-- Row 2: Balanced 4 icon row -->
+                    <div class="flex items-center justify-center gap-10 text-2xl text-gray-700 dark:text-gray-300">
+                        <a href="mailto:ahamadshad07@gmail.com" class="relative group/icon hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="Email">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">Email</span>
+                        </a>
+                        <a href="https://wa.me/8801725007360" class="relative group/icon hover:text-emerald-500 dark:hover:text-emerald-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">WhatsApp</span>
+                        </a>
+                        <a href="https://www.facebook.com/ahamad.shad.77" class="relative group/icon hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="Facebook">
+                            <i class="fa-brands fa-facebook"></i>
+                            <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">Facebook</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/shad-ahamad-b2a5751a1/" class="relative group/icon hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="LinkedIn">
+                            <i class="fa-brands fa-linkedin"></i>
+                            <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">LinkedIn</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Right Profile Photo -->
-            <div class="relative flex-shrink-0">
-                <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl ring-4 ring-blue-100 dark:ring-blue-900 transition-transform duration-300 hover:scale-105">
-                    <img src="profile.png" alt="Shad Ahamad" class="w-full h-full object-cover">
-                </div>
-            </div>
+            <!-- Right Profile Photo (Shifted much higher & no border) -->
+<!-- Right Profile Photo (Expanded container size) -->
+<div class="relative flex-shrink-0 -mt-6 md:-mt-10">
+    <div class="w-80 h-96 md:w-[450px] md:h-[550px] transition-transform duration-300 hover:scale-105">
+        <img src="profile.png" alt="Shad Ahamad" class="w-full h-full object-cover object-top">
+    </div>
+</div>
         </div>
     </section>
 
@@ -529,58 +721,60 @@
 
         </div>
 
-        <!-- Auto-Scrolling Carousel under Education & Leadership -->
+        <!-- Auto-Scrolling & Free Drag Carousel under Education & Leadership -->
         <div class="relative overflow-hidden rounded-xl bg-white/60 dark:bg-gray-800/60 p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
-            <div class="animate-scroll gap-6">
-                <!-- First Set of Images -->
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="bsc.png" alt="BSC in ECE-2023-[1st Class]" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">BSC in ECE-2023-[1st Class]</span>
+            <div id="edu-carousel" class="scroll-container">
+                <div class="scroll-content gap-6">
+                    <!-- First Set of Images -->
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="bsc.png" alt="BSC in ECE-2023-[1st Class]" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">BSC in ECE-2023-[1st Class]</span>
+                        </div>
                     </div>
-                </div>
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="hsc.png" alt="HSC-2017-[Board Scholarship]" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">HSC-2017-[Board Scholarship]</span>
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="hsc.png" alt="HSC-2017-[Board Scholarship]" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">HSC-2017-[Board Scholarship]</span>
+                        </div>
                     </div>
-                </div>
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="ssc.png" alt="SSC-2015" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">SSC-2015</span>
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="ssc.png" alt="SSC-2015" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">SSC-2015</span>
+                        </div>
                     </div>
-                </div>
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="kuet radio certificate.png" alt="KUET Radio-[2019-2023]" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">KUET Radio-[2019-2023]</span>
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="kuet radio certificate.png" alt="KUET Radio-[2019-2023]" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">KUET Radio-[2019-2023]</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Duplicate Set for Seamless Infinite Loop -->
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="bsc.png" alt="BSC in ECE-2023-[1st Class]" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">BSC in ECE-2023-[1st Class]</span>
+                    <!-- Duplicate Set for Seamless Infinite Loop -->
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="bsc.png" alt="BSC in ECE-2023-[1st Class]" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">BSC in ECE-2023-[1st Class]</span>
+                        </div>
                     </div>
-                </div>
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="hsc.png" alt="HSC-2017-[Board Scholarship]" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">HSC-2017-[Board Scholarship]</span>
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="hsc.png" alt="HSC-2017-[Board Scholarship]" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">HSC-2017-[Board Scholarship]</span>
+                        </div>
                     </div>
-                </div>
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="ssc.png" alt="SSC-2015" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">SSC-2015</span>
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="ssc.png" alt="SSC-2015" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">SSC-2015</span>
+                        </div>
                     </div>
-                </div>
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="kuet radio certificate.png" alt="KUET Radio-[2019-2023]" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">KUET Radio-[2019-2023]</span>
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="kuet radio certificate.png" alt="KUET Radio-[2019-2023]" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">KUET Radio-[2019-2023]</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -748,58 +942,60 @@
 
         </div>
 
-        <!-- Auto-Scrollable Certificates Carousel -->
+        <!-- Auto-Scrollable & Free Drag Certificates Carousel -->
         <div class="relative overflow-hidden rounded-lg bg-white/60 dark:bg-gray-900/60 p-4 border border-purple-100 dark:border-purple-900/40">
-            <div class="animate-scroll gap-6">
-                <!-- First Set of 4 Images -->
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="scm.png" alt="Supply Chain Management" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">Supply Chain Management</span>
+            <div id="cert-carousel" class="scroll-container">
+                <div class="scroll-content gap-6">
+                    <!-- First Set of 4 Images -->
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="scm.png" alt="Supply Chain Management" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">Supply Chain Management</span>
+                        </div>
                     </div>
-                </div>
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="cybersc.png" alt="Cyber Security" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">Cyber Security</span>
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="cybersc.png" alt="Cyber Security" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">Cyber Security</span>
+                        </div>
                     </div>
-                </div>
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="cyberhg.png" alt="Cyber Hygiene" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">Cyber Hygiene</span>
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="cyberhg.png" alt="Cyber Hygiene" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">Cyber Hygiene</span>
+                        </div>
                     </div>
-                </div>
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="ccna.png" alt="CCNA Fundamentals" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">CCNA Fundamentals</span>
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="ccna.png" alt="CCNA Fundamentals" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">CCNA Fundamentals</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Duplicate Set for Seamless Infinite Loop -->
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="scm.png" alt="Supply Chain Management" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">Supply Chain Management</span>
+                    <!-- Duplicate Set for Seamless Infinite Loop -->
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="scm.png" alt="Supply Chain Management" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">Supply Chain Management</span>
+                        </div>
                     </div>
-                </div>
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="cybersc.png" alt="Cyber Security" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">Cyber Security</span>
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="cybersc.png" alt="Cyber Security" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">Cyber Security</span>
+                        </div>
                     </div>
-                </div>
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="cyberhg.png" alt="Cyber Hygiene" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">Cyber Hygiene</span>
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="cyberhg.png" alt="Cyber Hygiene" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">Cyber Hygiene</span>
+                        </div>
                     </div>
-                </div>
-                <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="openModal(this)">
-                    <img src="ccna.png" alt="CCNA Fundamentals" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                        <span class="text-white font-medium text-xs md:text-sm">CCNA Fundamentals</span>
+                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                        <img src="ccna.png" alt="CCNA Fundamentals" class="w-full h-full object-cover pointer-events-none">
+                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                            <span class="text-white font-medium text-xs md:text-sm">CCNA Fundamentals</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -808,21 +1004,21 @@
 
     <!-- Footer / Let's Connect Section -->
     <footer id="contact" class="page-entrance opacity-0 bg-white/80 dark:bg-gray-800/80 border-t border-gray-200 dark:border-gray-700 py-12 transition-colors duration-300">
-        <div class="max-w-6xl mx-auto px-6 text-center">
+        <div class="max-w-6xl mx-auto px-6 text-center flex flex-col items-center justify-center">
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Let's Connect</h2>
-            <p class="text-black dark:text-white max-w-xl mx-auto mb-8 text-sm">
-                Feel free to reach out for professional inquiries, collaborations, or opportunities in supply chain management, product development and consumer electronics operations.
+            <p class="text-black dark:text-white max-w-xl mx-auto mb-6 text-s text-center">
+                 Thanks for reviewing my portfolio. I’m always open to discussing new challenges, technical projects, or strategic roles. Drop me a line, and let’s talk about how we can work together. Feel free to reach out for professional inquiries, collaborations, or opportunities in supply chain management, product development and consumer electronics operations.
             </p>
-			
-            <div class="flex justify-center space-x-6 text-2xl text-black dark:text-white mb-8">
+
+            <div class="flex justify-center items-center space-x-6 text-2xl text-black dark:text-white mb-8">
                 <a href="mailto:ahamadshad07@gmail.com" class="hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125 inline-block" title="Email"><i class="fa-solid fa-envelope"></i></a>
                 <a href="https://wa.me/8801725007360" class="hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125 inline-block" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                 <a href="https://www.facebook.com/ahamad.shad.77" class="hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125 inline-block" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
 				<a href="https://www.linkedin.com/in/shad-ahamad-b2a5751a1/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125 inline-block" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
 				<a href="https://github.com/gtSHAD" class="hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125 inline-block" title="github"><i class="fa-brands fa-github"></i></a>
-
             </div>
-            <p class="text-xs text-black dark:text-white">&copy; 2026 Shad Ahamad. All Rights Reserved.</p>
+
+            <p class="text-s text-black dark:text-white text-center">&copy; 2026 | ahamadshad07@gmail | Shad Ahamad. All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -840,7 +1036,7 @@
         </div>
     </div>
 
-    <!-- Dark Mode & Modal Pop-out Script -->
+    <!-- Script Section -->
     <script>
         // --- Live Date & Time Logic ---
         function updateDateTime() {
@@ -886,68 +1082,131 @@
             }
         });
 
-        // --- Lightbox Modal Pop-Out & Mouse Wheel Zoom Logic ---
-        const modal = document.getElementById('image-modal');
-        const modalImg = document.getElementById('modal-image');
+        // --- Dashboard Modal Toggle Logic ---
+        const dashboardModal = document.getElementById('dashboard-modal');
+        function toggleDashboard() {
+            if (dashboardModal.classList.contains('hidden')) {
+                dashboardModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                dashboardModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close Dashboard when clicking outside of the content container box
+        function closeDashboardOnOutsideClick(event) {
+            if (event.target === dashboardModal) {
+                toggleDashboard();
+            }
+        }
+
+        // --- Drag-to-Scroll & Infinite Auto-Scroll Logic ---
+        function setupDragAndAutoScroll(containerId) {
+            const container = document.getElementById(containerId);
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            let isDragged = false;
+            let autoScrollSpeed = 0.8;
+            let animationFrameId;
+            let isHovered = false;
+
+            function autoScroll() {
+                if (!isDown && !isHovered) {
+                    container.scrollLeft += autoScrollSpeed;
+                    if (container.scrollLeft >= container.scrollWidth / 2) {
+                        container.scrollLeft = 0;
+                    }
+                }
+                animationFrameId = requestAnimationFrame(autoScroll);
+            }
+
+            animationFrameId = requestAnimationFrame(autoScroll);
+
+            container.addEventListener('mouseenter', () => isHovered = true);
+            container.addEventListener('mouseleave', () => {
+                isHovered = false;
+                isDown = false;
+                container.classList.remove('active');
+            });
+
+            container.addEventListener('mousedown', (e) => {
+                isDown = true;
+                isDragged = false;
+                container.classList.add('active');
+                startX = e.pageX - container.offsetLeft;
+                scrollLeft = container.scrollLeft;
+            });
+
+            container.addEventListener('mouseup', () => {
+                isDown = false;
+                container.classList.remove('active');
+            });
+
+            container.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - container.offsetLeft;
+                const walk = (x - startX) * 1.8;
+                if (Math.abs(walk) > 5) {
+                    isDragged = true;
+                }
+                container.scrollLeft = scrollLeft - walk;
+
+                // Seamless Infinite Drag Wrap
+                const maxScroll = container.scrollWidth / 2;
+                if (container.scrollLeft >= maxScroll) {
+                    container.scrollLeft -= maxScroll;
+                    startX = e.pageX - container.offsetLeft;
+                    scrollLeft = container.scrollLeft;
+                } else if (container.scrollLeft <= 0) {
+                    container.scrollLeft += maxScroll;
+                    startX = e.pageX - container.offsetLeft;
+                    scrollLeft = container.scrollLeft;
+                }
+            });
+
+            // Expose drag tracker for card click handler
+            container.isDragged = () => isDragged;
+        }
+
+        setupDragAndAutoScroll('edu-carousel');
+        setupDragAndAutoScroll('cert-carousel');
+
+        function handleCardClick(element) {
+            const parentContainer = element.closest('.scroll-container');
+            if (parentContainer && parentContainer.isDragged && parentContainer.isDragged()) {
+                return; // Prevent opening modal if user was dragging horizontally
+            }
+            openModal(element);
+        }
+
+        // --- Lightbox Modal Pop-Up Logic ---
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
         const modalCaption = document.getElementById('modal-caption');
 
-        let zoomLevel = 1;
-        const minZoom = 0.5;
-        const maxZoom = 3;
-        const zoomStep = 0.1;
-
-        function openModal(element) {
-            const img = element.querySelector('img');
+        function openModal(cardElement) {
+            const img = cardElement.querySelector('img');
             if (img) {
-                modalImg.src = img.src;
+                modalImage.src = img.src;
                 modalCaption.innerText = img.alt || '';
-                modal.classList.remove('hidden');
-                
-                // Reset zoom scale on open
-                zoomLevel = 1;
-                modalImg.style.transform = `scale(${zoomLevel})`;
-                
-                // Trigger smooth zoom-in effect
+                imageModal.classList.remove('hidden');
                 setTimeout(() => {
-                    modalImg.classList.remove('opacity-0');
-                    modalImg.classList.add('opacity-100');
+                    modalImage.classList.remove('opacity-0');
+                    modalImage.classList.add('opacity-100');
                 }, 10);
             }
         }
 
         function closeModal() {
-            modalImg.classList.remove('opacity-100');
-            modalImg.classList.add('opacity-0');
+            modalImage.classList.remove('opacity-100');
+            modalImage.classList.add('opacity-0');
             setTimeout(() => {
-                modal.classList.add('hidden');
-                zoomLevel = 1;
-                modalImg.style.transform = `scale(${zoomLevel})`;
+                imageModal.classList.add('hidden');
             }, 200);
         }
-
-        // Mouse Wheel Zoom Event Listener
-        modal.addEventListener('wheel', function(e) {
-            if (modal.classList.contains('hidden')) return;
-            
-            e.preventDefault(); // Prevent page scrolling while zooming image
-            
-            if (e.deltaY < 0) {
-                // Scroll Up -> Zoom In
-                zoomLevel = Math.min(zoomLevel + zoomStep, maxZoom);
-            } else {
-                // Scroll Down -> Zoom Out
-                zoomLevel = Math.max(zoomLevel - zoomStep, minZoom);
-            }
-            
-            modalImg.style.transform = `scale(${zoomLevel})`;
-        }, { passive: false });
-
-        // Close on Escape Key Press
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                closeModal();
-            }
-        });
     </script>
 </body>
 </html>
