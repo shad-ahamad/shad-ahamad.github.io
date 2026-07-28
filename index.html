@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,15 +33,33 @@
             animation: fadeInUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
+        /* Fade-in transition arriving from behind for navbar navigation */
+        @keyframes fadeFromBehind {
+            0% {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .fade-from-behind {
+            animation: fadeFromBehind 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Single Page Layout Styling */
+        .portfolio-page {
+            display: none;
+        }
+        
+        .portfolio-page.active-page {
+            display: block;
+        }
+
         /* Gentle staggered entrance delays for smooth cascading reveal */
         nav.page-entrance { animation-delay: 0.10s; }
-        #about.page-entrance { animation-delay: 0.25s; }
-        #experience.page-entrance { animation-delay: 0.40s; }
-        #skills.page-entrance { animation-delay: 0.55s; }
-        #education.page-entrance { animation-delay: 0.70s; }
-        #projects.page-entrance { animation-delay: 0.85s; }
-        #certifications.page-entrance { animation-delay: 1.00s; }
-        footer.page-entrance { animation-delay: 1.15s; }
 
         /* Faint, Low-Density Circuit Board Pattern Background */
         .tech-bg {
@@ -84,72 +102,63 @@
             width: max-content;
         }
 
-        /* Glowing Red in Light Mode / Yellow in Dark Mode Light Bulb Animation */
-        @keyframes bulbGlowLight {
-            0%, 100% {
-                color: #ef4444; /* Soft Red */
-                filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.4));
-                transform: scale(1);
-            }
-            50% {
-                color: #f87171; /* Brighter Warm Red */
-                filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.7));
-                transform: scale(1.08);
-            }
-        }
-
-        @keyframes bulbGlowDark {
-            0%, 100% {
-                color: #facc15; /* Soft Yellow */
-                filter: drop-shadow(0 0 3px rgba(250, 204, 21, 0.4));
-                transform: scale(1);
-            }
-            50% {
-                color: #fef08a; /* Soft Light Yellow */
-                filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.7));
-                transform: scale(1.08);
-            }
-        }
-
-        .bulb-glow-icon {
-            animation: bulbGlowLight 3s infinite ease-in-out;
-        }
-
-        .dark .bulb-glow-icon {
-            animation: bulbGlowDark 3s infinite ease-in-out;
+        /* Indicator Line under Navbar Items */
+        .nav-indicator-active {
+            border-bottom: 5px solid currentColor !important;
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
         }
     </style>
 </head>
-<body class="tech-bg text-black dark:text-white antialiased transition-colors duration-300">
+<body class="tech-bg text-black dark:text-white antialiased transition-colors duration-300 min-h-screen flex flex-col justify-between">
 
-    <!-- Navigation -->
+    <!-- Navigation (Height reduced via py-2) -->
     <nav class="page-entrance opacity-0 fixed w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm border-b border-gray-200/60 dark:border-gray-800 z-50 transition-colors duration-300">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Nav Title with Glowing Light Bulb Icon -->
+        <div class="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
+            <!-- Nav Title with Dedicated Home Icon -->
             <div class="flex items-center gap-1.5">
-                <button id="dashboard-toggle-nav" type="button" onclick="toggleDashboard()" class="focus:outline-none transition-transform hover:scale-125 text-xl flex items-center justify-center mr-1" title="Impactful Portfolio Dashboard">
-                    <i class="fa-solid fa-lightbulb bulb-glow-icon"></i>
-                </button>
-                <a href="#" class="text-xl font-bold text-blue-700 dark:text-blue-400 tracking-wide inline-block transition-transform duration-300 hover:scale-105 origin-left hover:text-blue-600 dark:hover:text-blue-300">Shad Ahamad</a>
+                <a href="#about" class="nav-link text-3xl text-blue-600 dark:text-blue-400 transition-all duration-300 hover:scale-125 hover:-translate-y-0.5 flex items-center justify-center p-1" title="Home">
+                    <i class="fa-solid fa-house"></i>
+                </a>
             </div>
             
-            <div class="flex items-center space-x-4 md:space-x-6">
-                <!-- Nav Links styled in matching transparent banner pills with unchanged pop-out hover effect -->
-                <div class="hidden md:flex space-x-3 text-xs font-semibold">
-                    <a href="#about" class="inline-block px-3 py-1.5 rounded-lg bg-blue-500/15 dark:bg-blue-500/25 border border-blue-500/30 text-blue-800 dark:text-blue-300 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:shadow-md hover:bg-blue-500/30 dark:hover:bg-blue-500/40">About</a>
-                    <a href="#experience" class="inline-block px-3 py-1.5 rounded-lg bg-emerald-500/15 dark:bg-emerald-500/25 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:shadow-md hover:bg-emerald-500/30 dark:hover:bg-emerald-500/40">Experience</a>
-                    <a href="#skills" class="inline-block px-3 py-1.5 rounded-lg bg-red-500/15 dark:bg-red-500/25 border border-red-500/30 text-red-800 dark:text-red-300 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:shadow-md hover:bg-red-500/30 dark:hover:bg-red-500/40">Skills</a>
-                    <a href="#education" class="inline-block px-3 py-1.5 rounded-lg bg-cyan-500/15 dark:bg-cyan-500/25 border border-cyan-500/30 text-cyan-800 dark:text-cyan-300 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:shadow-md hover:bg-cyan-500/30 dark:hover:bg-cyan-500/40">Education</a>
-                    <a href="#projects" class="inline-block px-3 py-1.5 rounded-lg bg-indigo-500/15 dark:bg-indigo-500/25 border border-indigo-500/30 text-indigo-800 dark:text-indigo-300 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:shadow-md hover:bg-indigo-500/30 dark:hover:bg-indigo-500/40">Projects</a>
-                    <a href="#certifications" class="inline-block px-3 py-1.5 rounded-lg bg-purple-500/15 dark:bg-purple-500/25 border border-purple-500/30 text-purple-800 dark:text-purple-300 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:shadow-md hover:bg-purple-500/30 dark:hover:bg-purple-500/40">Certifications</a>
-                    <a href="#contact" class="inline-block px-3 py-1.5 rounded-lg bg-blue-500/15 dark:bg-blue-500/25 border border-blue-500/30 text-blue-800 dark:text-blue-300 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:shadow-md hover:bg-blue-500/30 dark:hover:bg-blue-500/40">Contact</a>
+            <div class="flex items-center space-x-4 md:space-x-8">
+                <!-- Nav Links styled in matching transparent banner pills with indicator line support and icons -->
+                <div class="hidden md:flex space-x-4 lg:space-x-6 text-sm font-semibold items-center">
+                    <a href="#summary-page" class="nav-link inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/15 dark:bg-amber-500/25 text-amber-800 dark:text-amber-300 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:bg-amber-500/30 dark:hover:bg-amber-500/40 focus:outline-none" title="Impactful Portfolio Dashboard">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Summary</span>
+                    </a>
+                    <a href="#experience" class="nav-link inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/15 dark:bg-emerald-500/25 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:bg-emerald-500/30 dark:hover:bg-emerald-500/40">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span>Experience</span>
+                    </a>
+                    <a href="#skills" class="nav-link inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500/15 dark:bg-red-500/25 border border-red-500/30 text-red-800 dark:text-red-300 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:bg-red-500/30 dark:hover:bg-red-500/40">
+                        <i class="fa-solid fa-gears"></i>
+                        <span>Skills</span>
+                    </a>
+                    <a href="#education" class="nav-link inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500/15 dark:bg-cyan-500/25 border border-cyan-500/30 text-cyan-800 dark:text-cyan-300 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:bg-cyan-500/30 dark:hover:bg-cyan-500/40">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Education</span>
+                    </a>
+                    <a href="#projects" class="nav-link inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-500/15 dark:bg-indigo-500/25 border border-indigo-500/30 text-indigo-800 dark:text-indigo-300 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:bg-indigo-500/30 dark:hover:bg-indigo-500/40">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <span>Projects</span>
+                    </a>
+                    <a href="#certifications" class="nav-link inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/15 dark:bg-purple-500/25 border border-purple-500/30 text-purple-800 dark:text-purple-300 transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md hover:bg-purple-500/30 dark:hover:bg-purple-500/40">
+                        <i class="fa-solid fa-certificate"></i>
+                        <span>Certifications</span>
+                    </a>
                 </div>
 
-                <!-- Dark/Light Mode Toggle Switch -->
-                <button id="theme-toggle" type="button" class="p-2 w-10 h-10 rounded-full bg-gray-100/80 dark:bg-gray-800 text-gray-600 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-110 hover:shadow-md flex items-center justify-center focus:outline-none">
-                    <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-lg"></i>
-                    <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-lg hidden"></i>
-                </button>
+                <!-- Dark/Light Mode Toggle Switch with Above Tooltip -->
+                <div class="relative group/theme ml-2">
+                    <button id="theme-toggle" type="button" class="p-2 w-10 h-10 rounded-full bg-gray-100/80 dark:bg-gray-800 text-gray-600 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-110 hover:shadow-md flex items-center justify-center focus:outline-none border-none outline-none" title="Toggle Theme">
+                        <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-lg"></i>
+                        <i id="theme-toggle-light-icon" class="fa-solid fa-lightbulb text-lg hidden"></i>
+                    </button>
+                    <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/theme:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">Toggle Theme</span>
+                </div>
 
                 <!-- Modern Live Date and Time Display Card -->
                 <div id="live-datetime" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gray-100/90 dark:bg-gray-800/90 border border-gray-200 dark:border-gray-700/80 shadow-sm transition-all duration-300 hover:shadow-md">
@@ -163,26 +172,85 @@
         </div>
     </nav>
 
-    <!-- Impactful Portfolio Highlights Dashboard Overlay -->
-    <div id="dashboard-modal" onclick="closeDashboardOnOutsideClick(event)" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-lg flex items-center justify-center p-4 md:p-8 transition-opacity duration-300">
-        <div class="relative w-full max-w-5xl max-h-[90vh] bg-white/95 dark:bg-gray-900/95 border border-amber-400/50 dark:border-amber-500/50 rounded-2xl shadow-2xl overflow-y-auto p-6 md:p-10 flex flex-col">
-            <!-- Modal Header -->
-            <div class="flex items-center justify-between pb-6 mb-6 border-b border-gray-200 dark:border-gray-800">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-lightbulb bulb-glow-icon"></i>
+    <!-- Main Content Container for Single Page Views -->
+    <main class="flex-grow">
+        <!-- Hero Section with Photo (Default Active First Page) -->
+        <section id="about" class="portfolio-page active-page page-entrance opacity-0 pt-24 pb-12 md:pt-32 md:pb-16 max-w-7xl mx-auto px-6">
+            <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-12 pl-0 md:pl-10">
+                <!-- Left Text Content -->
+                <div class="max-w-3xl w-full">
+                    
+                    <!-- Centered Name Box Header -->
+                    <div class="w-full bg-blue-500/20 dark:bg-blue-500/30 py-3 mb-6 text-center rounded-xl border border-blue-500/30 shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-blue-500/30 dark:hover:bg-blue-500/40 cursor-pointer">
+                        <h1 class="text-3xl md:text-5xl font-extrabold text-blue-900 dark:text-blue-300 tracking-tight uppercase">
+                            Shad Ahamad
+                        </h1>
                     </div>
-                    <div>
-                        <h2 class="text-2xl font-black text-gray-900 dark:text-white tracking-wide uppercase">Impact Highlights & Key Achievements</h2>
-                        <p class="text-xs text-amber-600 dark:text-amber-400 font-medium">Curated high-value skills, operational metrics & career milestones</p>
+
+                    <!-- Italicized Summary Section inside Translucent Hover Card -->
+                    <div class="bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 p-6 rounded-xl shadow-sm mb-6 text-center transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-blue-400 dark:hover:border-blue-500 cursor-default">
+                        <p class="text-base md:text-lg italic text-black dark:text-white leading-relaxed">
+                            "A motivated ECE graduate from KUET with hands-on experience in ERP-based operations, supply chain management, production planning, inventory control, and sales data analysis in the consumer electronics industry. Proven ability to drive production efficiency, improve quality, and launch successful products by collaborating with cross-functional teams."
+                        </p>
+                    </div>
+
+                    <!-- Contact Details Banner Card containing balanced layout -->
+                    <div class="bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 p-5 rounded-xl shadow-sm mb-8 transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-blue-400 dark:hover:border-blue-500 flex flex-col gap-4 text-black dark:text-white">
+                        <!-- Row 1: Balanced 3-column contact info with uniform gaps and reduced font size -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center justify-items-center text-center w-full text-xs sm:text-sm">
+                            <span class="flex items-center justify-center gap-2"><i class="fa-solid fa-location-dot text-blue-600 dark:text-blue-400"></i> Lalmati, Gazipur-1700</span>
+                            <span class="flex items-center justify-center gap-2"><i class="fa-solid fa-phone text-blue-600 dark:text-blue-400"></i> +880-1725007360</span>
+                            <span class="flex items-center justify-center gap-2"><i class="fa-solid fa-envelope text-blue-600 dark:text-blue-400"></i> ahamadshad07@gmail.com</span>
+                        </div>
+                        <hr class="border-gray-200 dark:border-gray-700 my-1">
+                        <!-- Row 2: Comprehensive Social & Contact Icons -->
+                        <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-2xl text-gray-700 dark:text-gray-300">
+                            <a href="mailto:ahamadshad07@gmail.com" class="relative group/icon hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="Email">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">Email</span>
+                            </a>
+                            <a href="https://wa.me/8801725007360" class="relative group/icon hover:text-emerald-500 dark:hover:text-emerald-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="WhatsApp">
+                                <i class="fa-brands fa-whatsapp"></i>
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">WhatsApp</span>
+                            </a>
+                            <a href="https://www.facebook.com/ahamad.shad.77" class="relative group/icon hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="Facebook">
+                                <i class="fa-brands fa-facebook"></i>
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">Facebook</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/shad-ahamad-b2a5751a1/" class="relative group/icon hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="LinkedIn">
+                                <i class="fa-brands fa-linkedin"></i>
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/gtSHAD" class="relative group/icon hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="GitHub">
+                                <i class="fa-brands fa-github"></i>
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">GitHub</span>
+                            </a>
+                            <a href="https://t.me/helloSHAD77" class="relative group/icon hover:text-sky-500 dark:hover:text-sky-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="Telegram">
+                                <i class="fa-brands fa-telegram"></i>
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">Telegram</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <button onclick="toggleDashboard()" class="text-gray-500 hover:text-amber-500 text-3xl font-bold transition-transform hover:rotate-90">
-                    &times;
-                </button>
+
+                <!-- Right Profile Photo -->
+                <div class="relative flex-shrink-0 -mt-6 md:-mt-10">
+                    <div class="w-80 h-96 md:w-[450px] md:h-[550px] transition-transform duration-300 hover:scale-105">
+                        <img src="profile.png" alt="Shad Ahamad" class="w-full h-full object-cover object-top">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dedicated Summary Page -->
+        <section id="summary-page" class="portfolio-page pt-24 pb-12 max-w-7xl mx-auto px-6">
+            <div class="w-full bg-amber-500/20 dark:bg-amber-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-amber-500/30 dark:hover:bg-amber-500/40 cursor-pointer">
+                <h2 class="text-3xl font-extrabold text-amber-800 dark:text-amber-300 flex items-center justify-center gap-3 uppercase">
+                    <i class="fa-solid fa-chart-pie"></i> Impact Highlights & Key Achievements
+                </h2>
             </div>
 
-            <!-- High Value Skills Section inside Dashboard -->
+            <!-- High Value Skills Section inside Summary Page -->
             <div class="mb-8 p-5 bg-gradient-to-r from-amber-500/10 via-red-500/10 to-amber-500/10 border border-amber-500/30 rounded-xl">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-3">
                     <i class="fa-solid fa-star text-amber-500"></i> High Value Skills
@@ -201,7 +269,6 @@
 
             <!-- Impact Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
                 <!-- Card 1 -->
                 <div class="group p-5 rounded-xl bg-slate-50 dark:bg-gray-800/80 border border-emerald-500/30 hover:border-emerald-500 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]">
                     <div class="flex items-center justify-between mb-3">
@@ -291,734 +358,659 @@
                     <h3 class="font-bold text-gray-900 dark:text-white text-base mb-2">BCI & RF Antenna Simulation</h3>
                     <p class="text-xs text-black dark:text-gray-300 leading-relaxed">Proficient in signal processing, CST Microwave Studio antenna optimization, and NI Multisim circuit design.</p>
                 </div>
-
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Hero Section with Photo -->
-    <section id="about" class="page-entrance opacity-0 pt-32 pb-16 md:pt-40 md:pb-24 max-w-6xl mx-auto px-6">
-        <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
-            <!-- Left Text Content -->
-            <div class="max-w-2xl w-full">
-                
-                <!-- Centered Name Box Header -->
-                <div class="w-full bg-blue-500/20 dark:bg-blue-500/30 py-3 mb-6 text-center rounded-xl border border-blue-500/30 shadow-sm transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-blue-500/30 dark:hover:bg-blue-500/40 cursor-pointer">
-                    <h1 class="text-3xl md:text-5xl font-extrabold text-blue-900 dark:text-blue-300 tracking-tight uppercase">
-                        Shad Ahamad
-                    </h1>
-                </div>
-
-                <!-- Italicized Summary Section inside Translucent Hover Card -->
-                <div class="bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 p-6 rounded-xl shadow-sm mb-6 text-center transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-blue-400 dark:hover:border-blue-500 cursor-default">
-                    <p class="text-s italic text-black dark:text-white leading-relaxed">
-                        "A motivated ECE graduate from KUET with hands-on experience in ERP-based operations, supply chain management, production planning, inventory control, and sales data analysis in the consumer electronics industry. Proven ability to drive production efficiency, improve quality, and launch successful products by collaborating with cross-functional teams."
-                    </p>
-                </div>
-
-                <!-- Contact Details Banner Card containing balanced 2-row layout -->
-                <div class="bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 p-5 rounded-xl shadow-sm mb-8 transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-blue-400 dark:hover:border-blue-500 flex flex-col gap-4 text-sm text-black dark:text-white">
-                    <!-- Row 1: Balanced 3-column contact info -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 items-center text-center">
-                        <span class="flex items-center justify-center gap-2"><i class="fa-solid fa-location-dot text-blue-600 dark:text-blue-400"></i> Lalmati, Gazipur-1700</span>
-                        <span class="flex items-center justify-center gap-2"><i class="fa-solid fa-phone text-blue-600 dark:text-blue-400"></i> +880-1725007360</span>
-                        <span class="flex items-center justify-center gap-2"><i class="fa-solid fa-envelope text-blue-600 dark:text-blue-400"></i> ahamadshad07@gmail.com</span>
-                    </div>
-                    <hr class="border-gray-200 dark:border-gray-700 my-1">
-                    <!-- Row 2: Balanced 4 icon row -->
-                    <div class="flex items-center justify-center gap-10 text-2xl text-gray-700 dark:text-gray-300">
-                        <a href="mailto:ahamadshad07@gmail.com" class="relative group/icon hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="Email">
-                            <i class="fa-solid fa-envelope"></i>
-                            <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">Email</span>
-                        </a>
-                        <a href="https://wa.me/8801725007360" class="relative group/icon hover:text-emerald-500 dark:hover:text-emerald-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="WhatsApp">
-                            <i class="fa-brands fa-whatsapp"></i>
-                            <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">WhatsApp</span>
-                        </a>
-                        <a href="https://www.facebook.com/ahamad.shad.77" class="relative group/icon hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="Facebook">
-                            <i class="fa-brands fa-facebook"></i>
-                            <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">Facebook</span>
-                        </a>
-                        <a href="https://www.linkedin.com/in/shad-ahamad-b2a5751a1/" class="relative group/icon hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:-translate-y-1 hover:scale-125" title="LinkedIn">
-                            <i class="fa-brands fa-linkedin"></i>
-                            <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">LinkedIn</span>
-                        </a>
-                    </div>
-                </div>
+        <!-- Work Experience Section (Clean Tree Branch / Hierarchy Style) -->
+        <section id="experience" class="portfolio-page pt-24 pb-12 max-w-7xl mx-auto px-6">
+            <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
+            <div class="w-full bg-emerald-500/20 dark:bg-emerald-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-emerald-500/30 dark:hover:bg-emerald-500/40 cursor-pointer">
+                <h2 class="text-3xl font-extrabold text-emerald-800 dark:text-emerald-300 flex items-center justify-center gap-3 uppercase">
+                    <i class="fa-solid fa-briefcase"></i> Work Experience
+                </h2>
             </div>
-
-            <!-- Right Profile Photo (Shifted much higher & no border) -->
-<!-- Right Profile Photo (Expanded container size) -->
-<div class="relative flex-shrink-0 -mt-6 md:-mt-10">
-    <div class="w-80 h-96 md:w-[450px] md:h-[550px] transition-transform duration-300 hover:scale-105">
-        <img src="profile.png" alt="Shad Ahamad" class="w-full h-full object-cover object-top">
-    </div>
-</div>
-        </div>
-    </section>
-
-    <!-- Work Experience Section (Clean Tree Branch / Hierarchy Style) -->
-    <section id="experience" class="page-entrance opacity-0 py-16 max-w-6xl mx-auto px-6 border-t border-gray-200/60 dark:border-gray-800">
-        <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
-        <div class="w-full bg-emerald-500/20 dark:bg-emerald-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-emerald-500/30 dark:hover:bg-emerald-500/40 cursor-pointer">
-            <h2 class="text-3xl font-extrabold text-emerald-800 dark:text-emerald-300 flex items-center justify-center gap-3 uppercase">
-                <i class="fa-solid fa-briefcase"></i> Work Experience
-            </h2>
-        </div>
-        
-        <!-- Tree Branch Structure for Work Experience -->
-        <div class="relative pl-4 md:pl-8 border-l-2 border-emerald-500/40 dark:border-emerald-400/40 space-y-8">
             
-            <!-- Walton Digi-Tech Role Node -->
-            <div class="relative pl-6">
-                <!-- Branch Connector to Main Trunk -->
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-emerald-500/40 dark:bg-emerald-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400"></div>
-
-                <!-- Card Container with Hover Effect -->
-                <div class="bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 p-6 rounded-xl shadow-sm mb-6 transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-emerald-400 dark:hover:border-emerald-500 cursor-default">
-                    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-2">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-white dark:bg-gray-700 p-2 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                <img src="walton.png" alt="Walton Digi-Tech Logo" class="max-h-full max-w-full object-contain">
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Deputy Product Manager</h3>
-                                <p class="text-emerald-600 dark:text-emerald-400 font-semibold text-sm">Walton Digi-Tech Industries Ltd. <span class="text-black dark:text-white font-normal">(Router, Network Switch, Smartwatch)</span></p>
-                            </div>
-                        </div>
-                        <span class="text-xs font-medium text-black dark:text-white bg-white dark:bg-gray-700 px-3 py-1 rounded-full border border-gray-200 dark:border-gray-600 w-fit">
-                            Jan 2025 – Jul 2025
-                        </span>
-                    </div>
-                    <p class="text-black dark:text-white text-sm leading-relaxed">
-                        Managed product sourcing, product lifecycle, tender compliance, sales, outlet stocks, and ERP-based inventory tracking. Collaborated with cross-functional teams to ensure timely delivery, quality control, and market alignment for advanced technology products.
-                    </p>
-                </div>
+            <!-- Tree Branch Structure for Work Experience -->
+            <div class="relative pl-4 md:pl-8 border-l-2 border-emerald-500/40 dark:border-emerald-400/40 space-y-8">
                 
-                <!-- Responsibilities 7-Checkpoint Timeline-Theme Branch -->
-                <div class="relative pl-6 border-l-2 border-emerald-400/50 dark:border-emerald-500/50 space-y-4 text-sm text-black dark:text-white">
+                <!-- Walton Digi-Tech Role Node -->
+                <div class="relative pl-8">
+                    <!-- Card Container with Hover Effect & Centered Branch Node -->
+                    <div class="relative bg-white/80 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 p-6 rounded-xl shadow-sm mb-6 transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-emerald-400 dark:hover:border-emerald-500 cursor-default">
+                        <!-- Branch Connector to Main Trunk with proper gap -->
+                        <div class="absolute -left-[25px] top-1/2 -translate-y-1/2 w-6 h-0.5 bg-emerald-500/40 dark:bg-emerald-400/40"></div>
+                        <div class="absolute -left-[29px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400"></div>
+
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-2">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white dark:bg-gray-700 p-2 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm">
+                                    <img src="walton.png" alt="Walton Digi-Tech Logo" class="max-h-full max-w-full object-contain">
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">Deputy Product Manager</h3>
+                                    <p class="text-emerald-600 dark:text-emerald-400 font-semibold text-sm">Walton Digi-Tech Industries Ltd. <span class="text-black dark:text-white font-normal">(Router, Network Switch, Smartwatch)</span></p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-medium text-black dark:text-white bg-white dark:bg-gray-700 px-3 py-1 rounded-full border border-gray-200 dark:border-gray-600 w-fit">
+                                Jan 2025 – Jul 2025
+                            </span>
+                        </div>
+                        <p class="text-black dark:text-white text-sm leading-relaxed">
+                            Managed product sourcing, product lifecycle, tender compliance, sales, outlet stocks, and ERP-based inventory tracking. Collaborated with cross-functional teams to ensure timely delivery, quality control, and market alignment for advanced technology products.
+                        </p>
+                    </div>
                     
-                    <!-- Checkpoint 1 -->
-                    <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
-                        <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
-                        <span>Utilized ERP systems (Oracle, EBS) to monitor inventory levels (raw materials & finished goods), sales data, and production status.</span>
-                    </div>
+                    <!-- Responsibilities 7-Checkpoint Timeline-Theme Branch -->
+                    <div class="relative pl-6 border-l-2 border-emerald-400/50 dark:border-emerald-500/50 space-y-4 text-sm text-black dark:text-white">
+                        
+                        <!-- Checkpoint 1 -->
+                        <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
+                            <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
+                            <span>Utilized ERP systems (Oracle, EBS) to monitor inventory levels (raw materials & finished goods), sales data, and production status.</span>
+                        </div>
 
-                    <!-- Checkpoint 2 -->
-                    <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
-                        <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
-                        <span>Generated BOM and reports; analyzed sales, stock, and production data to support management decision-making and operational planning.</span>
-                    </div>
+                        <!-- Checkpoint 2 -->
+                        <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
+                            <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
+                            <span>Generated BOM and reports; analyzed sales, stock, and production data to support management decision-making and operational planning.</span>
+                        </div>
 
-                    <!-- Checkpoint 3 -->
-                    <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
-                        <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
-                        <span>Coordinated with suppliers, planners, and production teams, achieving <strong>100% on-time production and delivery</strong> of priority orders.</span>
-                    </div>
+                        <!-- Checkpoint 3 -->
+                        <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
+                            <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
+                            <span>Coordinated with suppliers, planners, and production teams, achieving <strong>100% on-time production and delivery</strong> of priority orders.</span>
+                        </div>
 
-                    <!-- Checkpoint 4 -->
-                    <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
-                        <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
-                        <span>Streamlined production workflows, improving machine and personnel utilization by <strong>20%</strong>, resulting in higher overall output.</span>
-                    </div>
+                        <!-- Checkpoint 4 -->
+                        <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
+                            <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
+                            <span>Streamlined production workflows, improving machine and personnel utilization by <strong>20%</strong>, resulting in higher overall output.</span>
+                        </div>
 
-                    <!-- Checkpoint 5 -->
-                    <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
-                        <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
-                        <span>Contributed to product roadmapping and feature improvement, helping launch <strong>3 new device models</strong> (Wi-Fi 6, LTE Routers & Smartwatch).</span>
-                    </div>
+                        <!-- Checkpoint 5 -->
+                        <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
+                            <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
+                            <span>Contributed to product roadmapping and feature improvement, helping launch <strong>3 new device models</strong> (Wi-Fi 6, LTE Routers & Smartwatch).</span>
+                        </div>
 
-                    <!-- Checkpoint 6 -->
-                    <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
-                        <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
-                        <span>Analyzed product failures and implemented corrective actions/troubleshooting, reducing defects by <strong>25%</strong> and enhancing quality.</span>
-                    </div>
+                        <!-- Checkpoint 6 -->
+                        <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
+                            <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
+                            <span>Analyzed product failures and implemented corrective actions/troubleshooting, reducing defects by <strong>25%</strong> and enhancing quality.</span>
+                        </div>
 
-                    <!-- Checkpoint 7 -->
-                    <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
-                        <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
-                        <span>Assisted in government/private tender compliance and Pre-Shipment Inspection (PSI), ensuring product acceptance and higher margins.</span>
+                        <!-- Checkpoint 7 -->
+                        <div class="relative group/cp flex items-start gap-3 p-3 rounded-lg transition-all duration-300 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/20 hover:translate-x-1 cursor-default">
+                            <div class="absolute -left-[31px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-gray-900 shadow transition-transform duration-300 group-hover/cp:scale-125 group-hover/cp:bg-emerald-400"></div>
+                            <span>Assisted in government/private tender compliance and Pre-Shipment Inspection (PSI), ensuring product acceptance and higher margins.</span>
+                        </div>
                     </div>
                 </div>
+
             </div>
+        </section>
 
-        </div>
-    </section>
-
-    <!-- Skills Section (Timeline Theme Branch Layout) -->
-    <section id="skills" class="page-entrance opacity-0 py-16 max-w-6xl mx-auto px-6 border-t border-gray-200/60 dark:border-gray-800">
-        <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
-        <div class="w-full bg-red-500/20 dark:bg-red-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-red-500/30 dark:hover:bg-red-500/40 cursor-pointer">
-            <h2 class="text-3xl font-extrabold text-red-800 dark:text-red-300 flex items-center justify-center gap-3 uppercase">
-                <i class="fa-solid fa-gears"></i> Skills
-            </h2>
-        </div>
-        
-        <!-- Timeline Branch Structure (Top to Down) -->
-        <div class="relative pl-4 md:pl-8 border-l-2 border-red-500/40 dark:border-red-400/40 space-y-8">
+        <!-- Skills Section (Timeline Theme Branch Layout) -->
+        <section id="skills" class="portfolio-page pt-24 pb-12 max-w-7xl mx-auto px-6">
+            <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
+            <div class="w-full bg-red-500/20 dark:bg-red-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-red-500/30 dark:hover:bg-red-500/40 cursor-pointer">
+                <h2 class="text-3xl font-extrabold text-red-800 dark:text-red-300 flex items-center justify-center gap-3 uppercase">
+                    <i class="fa-solid fa-gears"></i> Skills
+                </h2>
+            </div>
             
-            <!-- Card 1: Product & Operations -->
-            <div class="relative pl-6">
-                <!-- Branch Connector -->
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-red-500/40 dark:bg-red-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-500 dark:bg-red-400"></div>
+            <!-- Timeline Branch Structure (Top to Down) -->
+            <div class="relative pl-4 md:pl-8 border-l-2 border-red-500/40 dark:border-red-400/40 space-y-8">
+                
+                <!-- Card 1: Product & Operations -->
+                <div class="relative pl-6">
+                    <!-- Branch Connector -->
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-red-500/40 dark:bg-red-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-500 dark:bg-red-400"></div>
 
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-400 relative">
-                    <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center justify-center gap-2 mb-4 pb-2 border-b border-red-100 dark:border-red-900/40 text-center">
-                        <i class="fa-solid fa-boxes-packing text-red-600 dark:text-red-400"></i> Product & Operations
-                    </h3>
-                    <ul class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-black dark:text-white">
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-arrows-spin text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Product Lifecycle Management (PLM)</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-truck-ramp-box text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Supply Chain Management (SCM)</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-chart-line text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Production Workflow Optimization</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-square-poll-vertical text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Sales & Inventory Data Analysis</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-file-contract text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Tender Compliance (e-GP)</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-clipboard-check text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>PSI (Pre-Shipment Inspection)</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Card 2: Software & Tools -->
-            <div class="relative pl-6">
-                <!-- Branch Connector -->
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-red-500/40 dark:bg-red-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-500 dark:bg-red-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-400 relative">
-                    <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center justify-center gap-2 mb-4 pb-2 border-b border-red-100 dark:border-red-900/40 text-center">
-                        <i class="fa-solid fa-laptop-code text-red-600 dark:text-red-400"></i> Software & Tools
-                    </h3>
-                    <ul class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-black dark:text-white">
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-database text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>ERP (Oracle, EBS, HRMS)</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-file-excel text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>MS Excel (Advanced), Word, PowerPoint</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-wave-square text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>NI Multisim & CST Microwave Studio</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-network-wired text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Cisco Packet Tracer</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-envelope-open-text text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Google Sheets, Gmail & Outlook</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-robot text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>AI Tools & File Management Tools</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Card 3: Technical Engineering -->
-            <div class="relative pl-6">
-                <!-- Branch Connector -->
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-red-500/40 dark:bg-red-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-500 dark:bg-red-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-400 relative">
-                    <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center justify-center gap-2 mb-4 pb-2 border-b border-red-100 dark:border-red-900/40 text-center">
-                        <i class="fa-solid fa-microchip text-red-600 dark:text-red-400"></i> Technical Engineering
-                    </h3>
-                    <ul class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-black dark:text-white">
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-lightbulb text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Product Development</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-microchip text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Electronics & Circuit Design</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-wrench text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Basic Networking & IT Troubleshooting</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-magnifying-glass-chart text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Market Research</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-chart-pie text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Data Analysis</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-wand-magic-sparkles text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>AI Prompt Engineering</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Card 4: Professional Attributes -->
-            <div class="relative pl-6">
-                <!-- Branch Connector -->
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-red-500/40 dark:bg-red-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-500 dark:bg-red-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-400 relative">
-                    <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center justify-center gap-2 mb-4 pb-2 border-b border-red-100 dark:border-red-900/40 text-center">
-                        <i class="fa-solid fa-user-check text-red-600 dark:text-red-400"></i> Professional Attributes
-                    </h3>
-                    <ul class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-black dark:text-white">
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-users text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Leadership & Teamwork</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-clock text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Time Management & Critical Thinking</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-comments text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Collaborative & Effective Communication</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-brain text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Analytical Ability</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-puzzle-piece text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Problem-Solving</span>
-                        </li>
-                        <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
-                            <i class="fa-solid fa-bolt text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
-                            <span>Quick Learning</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Education & Leadership Activities Section (Tree Branch & Hover Effect Structure) -->
-    <section id="education" class="page-entrance opacity-0 py-16 max-w-6xl mx-auto px-6 border-t border-gray-200/60 dark:border-gray-800">
-        <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
-        <div class="w-full bg-cyan-500/20 dark:bg-cyan-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-cyan-500/30 dark:hover:bg-cyan-500/40 cursor-pointer">
-            <h2 class="text-3xl font-extrabold text-cyan-800 dark:text-cyan-300 flex items-center justify-center gap-3 uppercase">
-                <i class="fa-solid fa-graduation-cap"></i> Education & Leadership Activities
-            </h2>
-        </div>
-
-        <!-- Tree Branch Structure for Education & Leadership -->
-        <div class="relative pl-4 md:pl-8 border-l-2 border-cyan-500/40 dark:border-cyan-400/40 space-y-8 mb-16">
-            
-            <!-- Card 1: KUET B.Sc. -->
-            <div class="relative pl-6">
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
-                    <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
-                        <img src="kuet.png" alt="KUET Logo" class="max-h-full max-w-full object-contain">
-                    </div>
-                    <div>
-                        <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">Graduated 2023</span>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">B.Sc. in Electronics and Communication Engineering</h3>
-                        <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Khulna University of Engineering & Technology (KUET)</p>
-                        <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">Focus: Communication Systems, Circuit Design & Embedded Logic.</p>
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-400 relative">
+                        <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center justify-center gap-2 mb-4 pb-2 border-b border-red-100 dark:border-red-900/40 text-center">
+                            <i class="fa-solid fa-boxes-packing text-red-600 dark:text-red-400"></i> Product & Operations
+                        </h3>
+                        <ul class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-black dark:text-white">
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-arrows-spin text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Product Lifecycle Management (PLM)</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-truck-ramp-box text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Supply Chain Management (SCM)</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-chart-line text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Production Workflow Optimization</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-square-poll-vertical text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Sales & Inventory Data Analysis</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-file-contract text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Tender Compliance (e-GP)</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-clipboard-check text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>PSI (Pre-Shipment Inspection)</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
 
-            <!-- Card 2: Rajuk HSC & SSC -->
-            <div class="relative pl-6">
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
+                <!-- Card 2: Software & Tools -->
+                <div class="relative pl-6">
+                    <!-- Branch Connector -->
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-red-500/40 dark:bg-red-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-500 dark:bg-red-400"></div>
 
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
-                    <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
-                        <img src="rajuk.png" alt="Rajuk Uttara Model College Logo" class="max-h-full max-w-full object-contain">
-                    </div>
-                    <div>
-                        <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">2015 – 2017</span>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">HSC & SSC (Science Stream)</h3>
-                        <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Rajuk Uttara Model College</p>
-                        <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">HSC (2017): GPA 5.00 (Board Scholarship) | SSC (2015): GPA 5.00</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3: KUET Radio Vice President -->
-            <div class="relative pl-6">
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
-                    <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
-                        <img src="kuet radio.png" alt="KUET Radio Logo" class="max-h-full max-w-full object-contain">
-                    </div>
-                    <div>
-                        <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">Sep 2019 – Feb 2023</span>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">KUET Radio — Vice President & RJ</h3>
-                        <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Executive Leadership & Operations</p>
-                        <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">Led presenters and producers, designed campaigns increasing engagement by 300%, and coordinated partner sponsorships.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4: Musketeer Boyz -->
-            <div class="relative pl-6">
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
-                    <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
-                        <img src="mb.png" alt="Musketeer Boyz Logo" class="max-h-full max-w-full object-contain">
-                    </div>
-                    <div>
-                        <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">Dec 2017 – Present</span>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">Musketeer Boyz — Founding Member & Admin</h3>
-                        <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Community Service & Youth Empowerment</p>
-                        <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">Organized community service events, sports initiatives, and mentored youth in social leadership.</p>
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-400 relative">
+                        <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center justify-center gap-2 mb-4 pb-2 border-b border-red-100 dark:border-red-900/40 text-center">
+                            <i class="fa-solid fa-laptop-code text-red-600 dark:text-red-400"></i> Software & Tools
+                        </h3>
+                        <ul class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-black dark:text-white">
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-database text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>ERP (Oracle, EBS, HRMS)</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-file-excel text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>MS Excel (Advanced), Word, PowerPoint</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-wave-square text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>NI Multisim & CST Microwave Studio</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-network-wired text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Cisco Packet Tracer</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-envelope-open-text text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Google Sheets, Gmail & Outlook</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-robot text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>AI Tools & File Management Tools</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
 
-            <!-- Card 5: TECHNIVAL & ECE NIGHT - Event Organizer -->
-            <div class="relative pl-6">
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
+                <!-- Card 3: Technical Engineering -->
+                <div class="relative pl-6">
+                    <!-- Branch Connector -->
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-red-500/40 dark:bg-red-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-500 dark:bg-red-400"></div>
 
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
-                    <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
-                        <i class="fa-solid fa-calendar-check text-2xl text-cyan-600 dark:text-cyan-400"></i>
-                    </div>
-                    <div>
-                        <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">2019 – 2020</span>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">TECHNIVAL & ECE NIGHT — Event Organizer</h3>
-                        <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Tech Fest and Cultural Events</p>
-                        <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">Coordinated national tech fests and cultural programs, managing workshops, competitions, exhibitions, and stage performances.</p>
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-400 relative">
+                        <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center justify-center gap-2 mb-4 pb-2 border-b border-red-100 dark:border-red-900/40 text-center">
+                            <i class="fa-solid fa-microchip text-red-600 dark:text-red-400"></i> Technical Engineering
+                        </h3>
+                        <ul class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-black dark:text-white">
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-lightbulb text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Product Development</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-microchip text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Electronics & Circuit Design</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-wrench text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Basic Networking & IT Troubleshooting</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-magnifying-glass-chart text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Market Research</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-chart-pie text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Data Analysis</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-wand-magic-sparkles text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>AI Prompt Engineering</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+
+                <!-- Card 4: Professional Attributes -->
+                <div class="relative pl-6">
+                    <!-- Branch Connector -->
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-red-500/40 dark:bg-red-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-500 dark:bg-red-400"></div>
+
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-red-400 relative">
+                        <h3 class="font-bold text-lg text-red-700 dark:text-red-300 flex items-center justify-center gap-2 mb-4 pb-2 border-b border-red-100 dark:border-red-900/40 text-center">
+                            <i class="fa-solid fa-user-check text-red-600 dark:text-red-400"></i> Professional Attributes
+                        </h3>
+                        <ul class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-black dark:text-white">
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-users text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Leadership & Teamwork</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-clock text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Time Management & Critical Thinking</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-comments text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Collaborative & Effective Communication</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-brain text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Analytical Ability</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-puzzle-piece text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Problem-Solving</span>
+                            </li>
+                            <li class="flex items-center group/item transition-transform duration-200 hover:translate-x-1">
+                                <i class="fa-solid fa-bolt text-red-600 dark:text-red-400 w-5 mr-2 text-center flex-shrink-0"></i>
+                                <span>Quick Learning</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Education & Leadership Activities Section (Tree Branch & Hover Effect Structure) -->
+        <section id="education" class="portfolio-page pt-24 pb-12 max-w-7xl mx-auto px-6">
+            <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
+            <div class="w-full bg-cyan-500/20 dark:bg-cyan-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-cyan-500/30 dark:hover:bg-cyan-500/40 cursor-pointer">
+                <h2 class="text-3xl font-extrabold text-cyan-800 dark:text-cyan-300 flex items-center justify-center gap-3 uppercase">
+                    <i class="fa-solid fa-graduation-cap"></i> Education & Leadership Activities
+                </h2>
             </div>
 
-        </div>
+            <!-- Tree Branch Structure for Education & Leadership -->
+            <div class="relative pl-4 md:pl-8 border-l-2 border-cyan-500/40 dark:border-cyan-400/40 space-y-8 mb-16">
+                
+                <!-- Card 1: KUET B.Sc. -->
+                <div class="relative pl-6">
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
 
-        <!-- Auto-Scrolling & Free Drag Carousel under Education & Leadership -->
-        <div class="relative overflow-hidden rounded-xl bg-white/60 dark:bg-gray-800/60 p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
-            <div id="edu-carousel" class="scroll-container">
-                <div class="scroll-content gap-6">
-                    <!-- First Set of Images -->
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="bsc.png" alt="BSC in ECE-2023-[1st Class]" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">BSC in ECE-2023-[1st Class]</span>
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                            <img src="kuet.png" alt="KUET Logo" class="max-h-full max-w-full object-contain">
                         </div>
-                    </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="hsc.png" alt="HSC-2017-[Board Scholarship]" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">HSC-2017-[Board Scholarship]</span>
-                        </div>
-                    </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="ssc.png" alt="SSC-2015" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">SSC-2015</span>
-                        </div>
-                    </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="kuet radio certificate.png" alt="KUET Radio-[2019-2023]" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">KUET Radio-[2019-2023]</span>
-                        </div>
-                    </div>
-
-                    <!-- Duplicate Set for Seamless Infinite Loop -->
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="bsc.png" alt="BSC in ECE-2023-[1st Class]" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">BSC in ECE-2023-[1st Class]</span>
-                        </div>
-                    </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="hsc.png" alt="HSC-2017-[Board Scholarship]" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">HSC-2017-[Board Scholarship]</span>
-                        </div>
-                    </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="ssc.png" alt="SSC-2015" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">SSC-2015</span>
-                        </div>
-                    </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="kuet radio certificate.png" alt="KUET Radio-[2019-2023]" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">KUET Radio-[2019-2023]</span>
+                        <div>
+                            <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">Graduated 2023</span>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">B.Sc. in Electronics and Communication Engineering</h3>
+                            <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Khulna University of Engineering & Technology (KUET)</p>
+                            <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">Focus: Communication Systems, Circuit Design & Embedded Logic.</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Academic Projects Section (Tree Branch & Hover Effect Structure) -->
-    <section id="projects" class="page-entrance opacity-0 py-16 max-w-6xl mx-auto px-6 border-t border-gray-200/60 dark:border-gray-800">
-        <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
-        <div class="w-full bg-indigo-500/20 dark:bg-indigo-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-indigo-500/30 dark:hover:bg-indigo-500/40 cursor-pointer">
-            <h2 class="text-3xl font-extrabold text-indigo-800 dark:text-indigo-300 flex items-center justify-center gap-3 uppercase">
-                <i class="fa-solid fa-diagram-project"></i> Academic Projects
-            </h2>
-        </div>
+                <!-- Card 2: Rajuk HSC & SSC -->
+                <div class="relative pl-6">
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
 
-        <!-- Tree Branch Structure for Academic Projects -->
-        <div class="relative pl-4 md:pl-8 border-l-2 border-indigo-500/40 dark:border-indigo-400/40 space-y-8">
-            
-            <!-- Project 1 Node -->
-            <div class="relative pl-6">
-                <!-- Branch Connector -->
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-indigo-500/40 dark:bg-indigo-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 cursor-default">
-                    <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">2022 – 2023</span>
-                    <h3 class="font-bold text-lg mt-3 mb-2 text-indigo-700 dark:text-indigo-300 flex items-center gap-2.5">
-                        <i class="fa-solid fa-brain text-indigo-600 dark:text-indigo-400 flex-shrink-0"></i>
-                        <span>Brain-Computer Interface for Gamma (&gamma;) Band Frequency</span>
-                    </h3>
-                    <p class="text-black dark:text-white text-sm leading-relaxed">
-                        Designed and simulated circuits in NI Multisim for gamma band frequency extraction from EEG signals. Conducted signal analysis to study brainwave patterns related to cognitive tasks and biomedical applications.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Project 2 Node -->
-            <div class="relative pl-6">
-                <!-- Branch Connector -->
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-indigo-500/40 dark:bg-indigo-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 cursor-default">
-                    <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">2021 – 2022</span>
-                    <h3 class="font-bold text-lg mt-3 mb-2 text-indigo-700 dark:text-indigo-300 flex items-center gap-2.5">
-                        <i class="fa-solid fa-hand-sparkles text-indigo-600 dark:text-indigo-400 flex-shrink-0"></i>
-                        <span>Arduino-Based Hand Gesture Control of Computer</span>
-                    </h3>
-                    <p class="text-black dark:text-white text-sm leading-relaxed">
-                        Implemented a computer control system using Arduino and hand gesture recognition. Integrated sensors to map hand motions into computer input commands in real-time.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Project 3 Node -->
-            <div class="relative pl-6">
-                <!-- Branch Connector -->
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-indigo-500/40 dark:bg-indigo-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 cursor-default">
-                    <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">2019 – 2020</span>
-                    <h3 class="font-bold text-lg mt-3 mb-2 text-indigo-700 dark:text-indigo-300 flex items-center gap-2.5">
-                        <i class="fa-solid fa-tower-cell text-indigo-600 dark:text-indigo-400 flex-shrink-0"></i>
-                        <span>Microstrip Patch Antenna Design using CST</span>
-                    </h3>
-                    <p class="text-black dark:text-white text-sm leading-relaxed">
-                        Designed and simulated a microstrip patch antenna using CST Microwave Studio. Optimized parameters for improved gain, bandwidth, radiation patterns, and efficiency.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Project 4 Node -->
-            <div class="relative pl-6">
-                <!-- Branch Connector -->
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-indigo-500/40 dark:bg-indigo-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 cursor-default">
-                    <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">2018 – 2019</span>
-                    <h3 class="font-bold text-lg mt-3 mb-2 text-indigo-700 dark:text-indigo-300 flex items-center gap-2.5">
-                        <i class="fa-solid fa-bolt text-indigo-600 dark:text-indigo-400 flex-shrink-0"></i>
-                        <span>Power Supply, Generator & Filter Circuits</span>
-                    </h3>
-                    <p class="text-black dark:text-white text-sm leading-relaxed">
-                        Developed a variable DC power supply, function generator, 7-segment display circuit, and band-pass filter. Validated performance through simulation and hardware testing.
-                    </p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Certifications Section (Tree Branch & Individual Card Layout) -->
-    <section id="certifications" class="page-entrance opacity-0 py-16 max-w-6xl mx-auto px-6 border-t border-gray-200/60 dark:border-gray-800">
-        <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
-        <div class="w-full bg-purple-500/20 dark:bg-purple-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-purple-500/30 dark:hover:bg-purple-500/40 cursor-pointer">
-            <h2 class="text-3xl font-extrabold text-purple-800 dark:text-purple-300 flex items-center justify-center gap-3 uppercase">
-                <i class="fa-solid fa-certificate"></i> Certifications
-            </h2>
-        </div>
-
-        <!-- Tree Branch Structure for Individual Certificate Cards -->
-        <div class="relative pl-4 md:pl-8 border-l-2 border-purple-500/40 dark:border-purple-400/40 space-y-8 mb-12">
-            
-            <!-- Cert Card 1 -->
-            <div class="relative pl-6">
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-purple-500/40 dark:bg-purple-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-purple-400 dark:hover:border-purple-500 cursor-default">
-                    <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">2025</span>
-                    <h3 class="font-bold text-lg mt-3 mb-1 text-purple-700 dark:text-purple-300 flex items-center gap-2.5">
-                        <i class="fa-solid fa-truck-ramp-box text-purple-600 dark:text-purple-400 flex-shrink-0"></i>
-                        <span>Introduction to Supply Chain Management</span>
-                    </h3>
-                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Simplilearn & SkillUp</p>
-                </div>
-            </div>
-
-            <!-- Cert Card 2 -->
-            <div class="relative pl-6">
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-purple-500/40 dark:bg-purple-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-purple-400 dark:hover:border-purple-500 cursor-default">
-                    <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">2025</span>
-                    <h3 class="font-bold text-lg mt-3 mb-1 text-purple-700 dark:text-purple-300 flex items-center gap-2.5">
-                        <i class="fa-solid fa-shield-halved text-purple-600 dark:text-purple-400 flex-shrink-0"></i>
-                        <span>Fundamentals of Cybersecurity</span>
-                    </h3>
-                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">upGrad</p>
-                </div>
-            </div>
-
-            <!-- Cert Card 3 -->
-            <div class="relative pl-6">
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-purple-500/40 dark:bg-purple-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-purple-400 dark:hover:border-purple-500 cursor-default">
-                    <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">2025</span>
-                    <h3 class="font-bold text-lg mt-3 mb-1 text-purple-700 dark:text-purple-300 flex items-center gap-2.5">
-                        <i class="fa-solid fa-user-shield text-purple-600 dark:text-purple-400 flex-shrink-0"></i>
-                        <span>Cyber Hygiene Online Training</span>
-                    </h3>
-                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">The Asia Foundation & SAJIDA Foundation</p>
-                </div>
-            </div>
-
-            <!-- Cert Card 4 -->
-            <div class="relative pl-6">
-                <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-purple-500/40 dark:bg-purple-400/40"></div>
-                <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400"></div>
-
-                <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-purple-400 dark:hover:border-purple-500 cursor-default">
-                    <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">2024</span>
-                    <h3 class="font-bold text-lg mt-3 mb-1 text-purple-700 dark:text-purple-300 flex items-center gap-2.5">
-                        <i class="fa-solid fa-network-wired text-purple-600 dark:text-purple-400 flex-shrink-0"></i>
-                        <span>Learn CCNA 200-301 Network Fundamentals</span>
-                    </h3>
-                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Simplilearn & SkillUp</p>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Auto-Scrollable & Free Drag Certificates Carousel -->
-        <div class="relative overflow-hidden rounded-lg bg-white/60 dark:bg-gray-900/60 p-4 border border-purple-100 dark:border-purple-900/40">
-            <div id="cert-carousel" class="scroll-container">
-                <div class="scroll-content gap-6">
-                    <!-- First Set of 4 Images -->
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="scm.png" alt="Supply Chain Management" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">Supply Chain Management</span>
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                            <img src="rajuk.png" alt="Rajuk Uttara Model College Logo" class="max-h-full max-w-full object-contain">
+                        </div>
+                        <div>
+                            <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">2015 – 2017</span>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">HSC & SSC (Science Stream)</h3>
+                            <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Rajuk Uttara Model College</p>
+                            <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">HSC (2017): GPA 5.00 (Board Scholarship) | SSC (2015): GPA 5.00</p>
                         </div>
                     </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="cybersc.png" alt="Cyber Security" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">Cyber Security</span>
-                        </div>
-                    </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="cyberhg.png" alt="Cyber Hygiene" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">Cyber Hygiene</span>
-                        </div>
-                    </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="ccna.png" alt="CCNA Fundamentals" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">CCNA Fundamentals</span>
-                        </div>
-                    </div>
+                </div>
 
-                    <!-- Duplicate Set for Seamless Infinite Loop -->
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="scm.png" alt="Supply Chain Management" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">Supply Chain Management</span>
+                <!-- Card 3: KUET Radio Vice President -->
+                <div class="relative pl-6">
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
+
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                            <img src="kuet radio.png" alt="KUET Radio Logo" class="max-h-full max-w-full object-contain">
+                        </div>
+                        <div>
+                            <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">Sep 2019 – Feb 2023</span>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">KUET Radio — Vice President & RJ</h3>
+                            <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Executive Leadership & Operations</p>
+                            <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">Led presenters and producers, designed campaigns increasing engagement by 300%, and coordinated partner sponsorships.</p>
                         </div>
                     </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="cybersc.png" alt="Cyber Security" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">Cyber Security</span>
+                </div>
+
+                <!-- Card 4: Musketeer Boyz -->
+                <div class="relative pl-6">
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
+
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                            <img src="mb.png" alt="Musketeer Boyz Logo" class="max-h-full max-w-full object-contain">
+                        </div>
+                        <div>
+                            <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">Dec 2017 – Present</span>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">Musketeer Boyz — Founding Member & Admin</h3>
+                            <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Community Service & Youth Empowerment</p>
+                            <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">Organized community service events, sports initiatives, and mentored youth in social leadership.</p>
                         </div>
                     </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="cyberhg.png" alt="Cyber Hygiene" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">Cyber Hygiene</span>
+                </div>
+
+                <!-- Card 5: TECHNIVAL & ECE NIGHT - Event Organizer -->
+                <div class="relative pl-6">
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-cyan-500/40 dark:bg-cyan-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400"></div>
+
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-cyan-400 dark:hover:border-cyan-500 cursor-default flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                            <i class="fa-solid fa-calendar-check text-2xl text-cyan-600 dark:text-cyan-400"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/50 px-2.5 py-1 rounded-full border border-cyan-200 dark:border-cyan-800">2019 – 2020</span>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mt-2">TECHNIVAL & ECE NIGHT — Event Organizer</h3>
+                            <p class="text-sm text-cyan-600 dark:text-cyan-400 font-medium">Tech Fest and Cultural Events</p>
+                            <p class="text-sm text-black dark:text-white mt-2 leading-relaxed">Coordinated national tech fests and cultural programs, managing workshops, competitions, exhibitions, and stage performances.</p>
                         </div>
                     </div>
-                    <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
-                        <img src="ccna.png" alt="CCNA Fundamentals" class="w-full h-full object-cover pointer-events-none">
-                        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
-                            <span class="text-white font-medium text-xs md:text-sm">CCNA Fundamentals</span>
+                </div>
+
+            </div>
+
+            <!-- Auto-Scrolling & Free Drag Carousel under Education & Leadership -->
+            <div class="relative overflow-hidden rounded-xl bg-white/60 dark:bg-gray-800/60 p-4 border border-gray-200 dark:border-gray-700 shadow-sm">
+                <div id="edu-carousel" class="scroll-container">
+                    <div class="scroll-content gap-6">
+                        <!-- First Set of Images -->
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="bsc.png" alt="BSC in ECE-2023-[1st Class]" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">BSC in ECE-2023-[1st Class]</span>
+                            </div>
+                        </div>
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="hsc.png" alt="HSC-2017-[Board Scholarship]" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">HSC-2017-[Board Scholarship]</span>
+                            </div>
+                        </div>
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="ssc.png" alt="SSC-2015" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">SSC-2015</span>
+                            </div>
+                        </div>
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="kuet radio certificate.png" alt="KUET Radio-[2019-2023]" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">KUET Radio-[2019-2023]</span>
+                            </div>
+                        </div>
+
+                        <!-- Duplicate Set for Seamless Infinite Loop -->
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="bsc.png" alt="BSC in ECE-2023-[1st Class]" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">BSC in ECE-2023-[1st Class]</span>
+                            </div>
+                        </div>
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="hsc.png" alt="HSC-2017-[Board Scholarship]" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">HSC-2017-[Board Scholarship]</span>
+                            </div>
+                        </div>
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="ssc.png" alt="SSC-2015" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">SSC-2015</span>
+                            </div>
+                        </div>
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="kuet radio certificate.png" alt="KUET Radio-[2019-2023]" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">KUET Radio-[2019-2023]</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer / Let's Connect Section -->
-    <footer id="contact" class="page-entrance opacity-0 bg-white/80 dark:bg-gray-800/80 border-t border-gray-200 dark:border-gray-700 py-12 transition-colors duration-300">
-        <div class="max-w-6xl mx-auto px-6 text-center flex flex-col items-center justify-center">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Let's Connect</h2>
-            <p class="text-black dark:text-white max-w-xl mx-auto mb-6 text-s text-center">
-                 Thanks for reviewing my portfolio. I’m always open to discussing new challenges, technical projects, or strategic roles. Drop me a line, and let’s talk about how we can work together. Feel free to reach out for professional inquiries, collaborations, or opportunities in supply chain management, product development and consumer electronics operations.
-            </p>
-
-            <div class="flex justify-center items-center space-x-6 text-2xl text-black dark:text-white mb-8">
-                <a href="mailto:ahamadshad07@gmail.com" class="hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125 inline-block" title="Email"><i class="fa-solid fa-envelope"></i></a>
-                <a href="https://wa.me/8801725007360" class="hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125 inline-block" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                <a href="https://www.facebook.com/ahamad.shad.77" class="hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125 inline-block" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
-				<a href="https://www.linkedin.com/in/shad-ahamad-b2a5751a1/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125 inline-block" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-				<a href="https://github.com/gtSHAD" class="hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125 inline-block" title="github"><i class="fa-brands fa-github"></i></a>
+        <!-- Academic Projects Section (Tree Branch & Hover Effect Structure) -->
+        <section id="projects" class="portfolio-page pt-24 pb-12 max-w-7xl mx-auto px-6">
+            <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
+            <div class="w-full bg-indigo-500/20 dark:bg-indigo-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-indigo-500/30 dark:hover:bg-indigo-500/40 cursor-pointer">
+                <h2 class="text-3xl font-extrabold text-indigo-800 dark:text-indigo-300 flex items-center justify-center gap-3 uppercase">
+                    <i class="fa-solid fa-diagram-project"></i> Academic Projects
+                </h2>
             </div>
 
-            <p class="text-s text-black dark:text-white text-center">&copy; 2026 | ahamadshad07@gmail | Shad Ahamad. All Rights Reserved.</p>
+            <!-- Tree Branch Structure for Academic Projects -->
+            <div class="relative pl-4 md:pl-8 border-l-2 border-indigo-500/40 dark:border-indigo-400/40 space-y-8">
+                
+                <!-- Project 1 Node -->
+                <div class="relative pl-6">
+                    <!-- Branch Connector -->
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-indigo-500/40 dark:bg-indigo-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
+
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 cursor-default">
+                        <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">2022 – 2023</span>
+                        <h3 class="font-bold text-lg mt-3 mb-2 text-indigo-700 dark:text-indigo-300 flex items-center gap-2.5">
+                            <i class="fa-solid fa-brain text-indigo-600 dark:text-indigo-400 flex-shrink-0"></i>
+                            <span>Brain-Computer Interface for Gamma (&gamma;) Band Frequency</span>
+                        </h3>
+                        <p class="text-black dark:text-white text-sm leading-relaxed">
+                            Designed and simulated circuits in NI Multisim for gamma band frequency extraction from EEG signals. Conducted signal analysis to study brainwave patterns related to cognitive tasks and biomedical applications.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Project 2 Node -->
+                <div class="relative pl-6">
+                    <!-- Branch Connector -->
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-indigo-500/40 dark:bg-indigo-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
+
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 cursor-default">
+                        <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">2021 – 2022</span>
+                        <h3 class="font-bold text-lg mt-3 mb-2 text-indigo-700 dark:text-indigo-300 flex items-center gap-2.5">
+                            <i class="fa-solid fa-hand-sparkles text-indigo-600 dark:text-indigo-400 flex-shrink-0"></i>
+                            <span>Arduino-Based Hand Gesture Control of Computer</span>
+                        </h3>
+                        <p class="text-black dark:text-white text-sm leading-relaxed">
+                            Implemented a computer control system using Arduino and hand gesture recognition. Integrated sensors to map hand motions into computer input commands in real-time.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Project 3 Node -->
+                <div class="relative pl-6">
+                    <!-- Branch Connector -->
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-indigo-500/40 dark:bg-indigo-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
+
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 cursor-default">
+                        <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">2019 – 2020</span>
+                        <h3 class="font-bold text-lg mt-3 mb-2 text-indigo-700 dark:text-indigo-300 flex items-center gap-2.5">
+                            <i class="fa-solid fa-tower-cell text-indigo-600 dark:text-indigo-400 flex-shrink-0"></i>
+                            <span>Microstrip Patch Antenna Design using CST</span>
+                        </h3>
+                        <p class="text-black dark:text-white text-sm leading-relaxed">
+                            Designed and simulated a microstrip patch antenna using CST Microwave Studio. Optimized parameters for improved gain, bandwidth, radiation patterns, and efficiency.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Project 4 Node -->
+                <div class="relative pl-6">
+                    <!-- Branch Connector -->
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-indigo-500/40 dark:bg-indigo-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400"></div>
+
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 cursor-default">
+                        <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800">2018 – 2019</span>
+                        <h3 class="font-bold text-lg mt-3 mb-2 text-indigo-700 dark:text-indigo-300 flex items-center gap-2.5">
+                            <i class="fa-solid fa-bolt text-indigo-600 dark:text-indigo-400 flex-shrink-0"></i>
+                            <span>Power Supply, Generator & Filter Circuits</span>
+                        </h3>
+                        <p class="text-black dark:text-white text-sm leading-relaxed">
+                            Developed a variable DC power supply, function generator, 7-segment display circuit, and band-pass filter. Validated performance through simulation and hardware testing.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Certifications Section (Tree Branch & Individual Card Layout) -->
+        <section id="certifications" class="portfolio-page pt-24 pb-12 max-w-7xl mx-auto px-6">
+            <!-- Full-Width Highlighting Banner Title with Pop-Out Hover Effect -->
+            <div class="w-full bg-purple-500/20 dark:bg-purple-500/30 py-3 mb-10 text-center rounded-md transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg hover:bg-purple-500/30 dark:hover:bg-purple-500/40 cursor-pointer">
+                <h2 class="text-3xl font-extrabold text-purple-800 dark:text-purple-300 flex items-center justify-center gap-3 uppercase">
+                    <i class="fa-solid fa-certificate"></i> Certifications
+                </h2>
+            </div>
+
+            <!-- Tree Branch Structure for Individual Certificate Cards -->
+            <div class="relative pl-4 md:pl-8 border-l-2 border-purple-500/40 dark:border-purple-400/40 space-y-8 mb-12">
+                
+                <!-- Cert Card 1 -->
+                <div class="relative pl-6">
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-purple-500/40 dark:bg-purple-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400"></div>
+
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-purple-400 dark:hover:border-purple-500 cursor-default">
+                        <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">2025</span>
+                        <h3 class="font-bold text-lg mt-3 mb-1 text-purple-700 dark:text-purple-300 flex items-center gap-2.5">
+                            <i class="fa-solid fa-truck-ramp-box text-purple-600 dark:text-purple-400 flex-shrink-0"></i>
+                            <span>Introduction to Supply Chain Management</span>
+                        </h3>
+                        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Simplilearn & SkillUp</p>
+                    </div>
+                </div>
+
+                <!-- Cert Card 2 -->
+                <div class="relative pl-6">
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-purple-500/40 dark:bg-purple-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400"></div>
+
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-purple-400 dark:hover:border-purple-500 cursor-default">
+                        <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">2025</span>
+                        <h3 class="font-bold text-lg mt-3 mb-1 text-purple-700 dark:text-purple-300 flex items-center gap-2.5">
+                            <i class="fa-solid fa-shield-halved text-purple-600 dark:text-purple-400 flex-shrink-0"></i>
+                            <span>Fundamentals of Cybersecurity</span>
+                        </h3>
+                        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">upGrad</p>
+                    </div>
+                </div>
+
+                <!-- Cert Card 3 -->
+                <div class="relative pl-6">
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-purple-500/40 dark:bg-purple-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400"></div>
+
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-purple-400 dark:hover:border-purple-500 cursor-default">
+                        <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">2025</span>
+                        <h3 class="font-bold text-lg mt-3 mb-1 text-purple-700 dark:text-purple-300 flex items-center gap-2.5">
+                            <i class="fa-solid fa-user-shield text-purple-600 dark:text-purple-400 flex-shrink-0"></i>
+                            <span>Cyber Hygiene Online Training</span>
+                        </h3>
+                        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">The Asia Foundation & SAJIDA Foundation</p>
+                    </div>
+                </div>
+
+                <!-- Cert Card 4 -->
+                <div class="relative pl-6">
+                    <div class="absolute -left-[17px] top-1/2 -translate-y-1/2 w-4 h-0.5 bg-purple-500/40 dark:bg-purple-400/40"></div>
+                    <div class="absolute -left-[21px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400"></div>
+
+                    <div class="bg-white/80 dark:bg-gray-800/80 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transform transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-xl hover:border-purple-400 dark:hover:border-purple-500 cursor-default">
+                        <span class="text-xs font-semibold text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/50 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">2024</span>
+                        <h3 class="font-bold text-lg mt-3 mb-1 text-purple-700 dark:text-purple-300 flex items-center gap-2.5">
+                            <i class="fa-solid fa-network-wired text-purple-600 dark:text-purple-400 flex-shrink-0"></i>
+                            <span>Learn CCNA 200-301 Network Fundamentals</span>
+                        </h3>
+                        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Simplilearn & SkillUp</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Auto-Scrollable & Free Drag Certificates Carousel -->
+            <div class="relative overflow-hidden rounded-lg bg-white/60 dark:bg-gray-900/60 p-4 border border-purple-100 dark:border-purple-900/40">
+                <div id="cert-carousel" class="scroll-container">
+                    <div class="scroll-content gap-6">
+                        <!-- First Set of 4 Images -->
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="scm.png" alt="Supply Chain Management" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">Supply Chain Management</span>
+                            </div>
+                        </div>
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="cybersc.png" alt="Cyber Security" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">Cyber Security</span>
+                            </div>
+                        </div>
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="cyberhg.png" alt="Cyber Hygiene" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">Cyber Hygiene</span>
+                            </div>
+                        </div>
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="ccna.png" alt="CCNA Fundamentals" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">CCNA Fundamentals</span>
+                            </div>
+                        </div>
+
+                        <!-- Duplicate Set for Seamless Infinite Loop -->
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="scm.png" alt="Supply Chain Management" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">Supply Chain Management</span>
+                            </div>
+                        </div>
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="cybersc.png" alt="Cyber Security" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">Cyber Security</span>
+                            </div>
+                        </div>
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="cyberhg.png" alt="Cyber Hygiene" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">Cyber Hygiene</span>
+                            </div>
+                        </div>
+                        <div class="group relative cert-card w-64 h-44 flex-shrink-0 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden flex items-center justify-center cursor-zoom-in transition-transform hover:scale-105" onclick="handleCardClick(this)">
+                            <img src="ccna.png" alt="CCNA Fundamentals" class="w-full h-full object-cover pointer-events-none">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 text-center pointer-events-none">
+                                <span class="text-white font-medium text-xs md:text-sm">CCNA Fundamentals</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Height reduced via py-3) -->
+    <footer class="bg-white/80 dark:bg-gray-800/80 border-t border-gray-200 dark:border-gray-700 py-3 transition-colors duration-300 mt-auto">
+        <div id="footer-content" class="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center gap-2 text-center">
+            <!-- Footer content dynamically populated by script based on current active section -->
         </div>
     </footer>
 
@@ -1038,11 +1030,106 @@
 
     <!-- Script Section -->
     <script>
+        // Function to update active link indicator line under navbar items & handle home icon styling / custom footer visibility
+        function updateActiveNavIndicator(targetId) {
+            const homeIcon = document.querySelector('a.nav-link[href="#about"]');
+            const footerContainer = document.getElementById('footer-content');
+
+            // Handle Homepage Footer Customization & Home Icon Color
+            if (targetId === '#about') {
+                if (footerContainer) {
+                    footerContainer.innerHTML = `<p class="text-sm text-black dark:text-white">&copy; 2026 Shad Ahamad | ahamadshad07@gmail.com | All Rights Reserved</p>`;
+                }
+                if (homeIcon) {
+                    homeIcon.classList.remove('text-gray-400', 'dark:text-gray-500');
+                    homeIcon.classList.add('text-blue-600', 'dark:text-blue-400');
+                }
+            } else {
+                if (footerContainer) {
+                    footerContainer.innerHTML = `
+                        <p class="text-sm text-black dark:text-white">&copy; 2026 Shad Ahamad | ahamadshad07@gmail.com | All Rights Reserved </p>
+                        <div class="flex items-center justify-center gap-5 text-lg text-gray-700 dark:text-gray-300">
+                            <a href="mailto:ahamadshad07@gmail.com" class="relative group/icon hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125" title="Email">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">Email</span>
+                            </a>
+                            <a href="https://wa.me/8801725007360" class="relative group/icon hover:text-emerald-500 dark:hover:text-emerald-400 transition-all duration-300 hover:scale-125" title="WhatsApp">
+                                <i class="fa-brands fa-whatsapp"></i>
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">WhatsApp</span>
+                            </a>
+                            <a href="https://www.facebook.com/ahamad.shad.77" class="relative group/icon hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125" title="Facebook">
+                                <i class="fa-brands fa-facebook"></i>
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">Facebook</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/shad-ahamad-b2a5751a1/" class="relative group/icon hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-125" title="LinkedIn">
+                                <i class="fa-brands fa-linkedin"></i>
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/gtSHAD" class="relative group/icon hover:text-gray-900 dark:hover:text-gray-100 transition-all duration-300 hover:scale-125" title="GitHub">
+                                <i class="fa-brands fa-github"></i>
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">GitHub</span>
+                            </a>
+                            <a href="https://t.me/helloSHAD77" class="relative group/icon hover:text-sky-500 dark:hover:text-sky-400 transition-all duration-300 hover:scale-125" title="Telegram">
+                                <i class="fa-brands fa-telegram"></i>
+                                <span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/icon:block px-2 py-1 bg-gray-900 text-white text-[10px] rounded shadow-lg whitespace-nowrap z-20">Telegram</span>
+                            </a>
+                        </div>
+                    `;
+                }
+                if (homeIcon) {
+                    homeIcon.classList.remove('text-blue-600', 'dark:text-blue-400');
+                    homeIcon.classList.add('text-gray-400', 'dark:text-gray-500');
+                }
+            }
+
+            // Apply indicator line only to non-home navbar links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('nav-indicator-active');
+                if (link.getAttribute('href') === targetId && targetId !== '#about') {
+                    link.classList.add('nav-indicator-active');
+                }
+            });
+        }
+
+        // --- Single Page View Switcher ---
+        document.querySelectorAll('.nav-link').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (!targetId || targetId === '#') return;
+                
+                e.preventDefault();
+                
+                // Hide all pages
+                document.querySelectorAll('.portfolio-page').forEach(page => {
+                    page.classList.remove('active-page', 'fade-from-behind');
+                });
+                
+                // Show selected page
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.classList.add('active-page');
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                    void targetElement.offsetWidth; // Trigger reflow for animation restart
+                    targetElement.classList.add('fade-from-behind');
+                    
+                    // Update indicator line & footer configuration
+                    updateActiveNavIndicator(targetId);
+                }
+            });
+        });
+
+        // Initialize active indicator on initial load (About page active by default)
+        document.addEventListener('DOMContentLoaded', () => {
+            updateActiveNavIndicator('#about');
+            setupDragAndAutoScroll('edu-carousel');
+            setupDragAndAutoScroll('cert-carousel');
+        });
+
         // --- Live Date & Time Logic ---
         function updateDateTime() {
             const now = new Date();
             
-            // Format Date (e.g., Jul 23, 2026)
+            // Format Date (e.g., Jul 28, 2026)
             const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
             document.getElementById('current-date').innerText = now.toLocaleDateString('en-US', dateOptions);
             
@@ -1082,130 +1169,36 @@
             }
         });
 
-        // --- Dashboard Modal Toggle Logic ---
-        const dashboardModal = document.getElementById('dashboard-modal');
-        function toggleDashboard() {
-            if (dashboardModal.classList.contains('hidden')) {
-                dashboardModal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            } else {
-                dashboardModal.classList.add('hidden');
-                document.body.style.overflow = '';
-            }
-        }
-
-        // Close Dashboard when clicking outside of the content container box
-        function closeDashboardOnOutsideClick(event) {
-            if (event.target === dashboardModal) {
-                toggleDashboard();
-            }
-        }
-
-        // --- Drag-to-Scroll & Infinite Auto-Scroll Logic ---
-        function setupDragAndAutoScroll(containerId) {
-            const container = document.getElementById(containerId);
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-            let isDragged = false;
-            let autoScrollSpeed = 0.8;
-            let animationFrameId;
-            let isHovered = false;
-
-            function autoScroll() {
-                if (!isDown && !isHovered) {
-                    container.scrollLeft += autoScrollSpeed;
-                    if (container.scrollLeft >= container.scrollWidth / 2) {
-                        container.scrollLeft = 0;
-                    }
-                }
-                animationFrameId = requestAnimationFrame(autoScroll);
-            }
-
-            animationFrameId = requestAnimationFrame(autoScroll);
-
-            container.addEventListener('mouseenter', () => isHovered = true);
-            container.addEventListener('mouseleave', () => {
-                isHovered = false;
-                isDown = false;
-                container.classList.remove('active');
-            });
-
-            container.addEventListener('mousedown', (e) => {
-                isDown = true;
-                isDragged = false;
-                container.classList.add('active');
-                startX = e.pageX - container.offsetLeft;
-                scrollLeft = container.scrollLeft;
-            });
-
-            container.addEventListener('mouseup', () => {
-                isDown = false;
-                container.classList.remove('active');
-            });
-
-            container.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - container.offsetLeft;
-                const walk = (x - startX) * 1.8;
-                if (Math.abs(walk) > 5) {
-                    isDragged = true;
-                }
-                container.scrollLeft = scrollLeft - walk;
-
-                // Seamless Infinite Drag Wrap
-                const maxScroll = container.scrollWidth / 2;
-                if (container.scrollLeft >= maxScroll) {
-                    container.scrollLeft -= maxScroll;
-                    startX = e.pageX - container.offsetLeft;
-                    scrollLeft = container.scrollLeft;
-                } else if (container.scrollLeft <= 0) {
-                    container.scrollLeft += maxScroll;
-                    startX = e.pageX - container.offsetLeft;
-                    scrollLeft = container.scrollLeft;
-                }
-            });
-
-            // Expose drag tracker for card click handler
-            container.isDragged = () => isDragged;
-        }
-
-        setupDragAndAutoScroll('edu-carousel');
-        setupDragAndAutoScroll('cert-carousel');
-
-        function handleCardClick(element) {
-            const parentContainer = element.closest('.scroll-container');
-            if (parentContainer && parentContainer.isDragged && parentContainer.isDragged()) {
-                return; // Prevent opening modal if user was dragging horizontally
-            }
-            openModal(element);
-        }
-
-        // --- Lightbox Modal Pop-Up Logic ---
-        const imageModal = document.getElementById('image-modal');
-        const modalImage = document.getElementById('modal-image');
+        // --- Modal Zoom Logic for Images ---
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-image');
         const modalCaption = document.getElementById('modal-caption');
 
-        function openModal(cardElement) {
-            const img = cardElement.querySelector('img');
+        function handleCardClick(card) {
+            const img = card.querySelector('img');
             if (img) {
-                modalImage.src = img.src;
-                modalCaption.innerText = img.alt || '';
-                imageModal.classList.remove('hidden');
-                setTimeout(() => {
-                    modalImage.classList.remove('opacity-0');
-                    modalImage.classList.add('opacity-100');
-                }, 10);
+                openModal(img.src, img.alt);
             }
+        }
+
+        function openModal(src, caption) {
+            modalImg.src = src;
+            modalCaption.innerText = caption;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                modalImg.classList.remove('opacity-0');
+                modalImg.classList.add('opacity-100');
+            }, 10);
         }
 
         function closeModal() {
-            modalImage.classList.remove('opacity-100');
-            modalImage.classList.add('opacity-0');
+            modalImg.classList.remove('opacity-100');
+            modalImg.classList.add('opacity-0');
             setTimeout(() => {
-                imageModal.classList.add('hidden');
-            }, 200);
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
         }
     </script>
 </body>
