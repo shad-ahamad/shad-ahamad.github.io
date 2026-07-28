@@ -1030,6 +1030,68 @@
 
     <!-- Script Section -->
     <script>
+        // --- Auto-scroll and Mouse Drag Carousel Functionality ---
+        function setupDragAndAutoScroll(id) {
+            const container = document.getElementById(id);
+            if (!container) return;
+
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            const speed = 1; // Auto-scroll speed (right to left)
+
+            function autoScroll() {
+                if (!isDown) {
+                    container.scrollLeft += speed;
+                    const maxScroll = container.scrollWidth / 2;
+                    if (container.scrollLeft >= maxScroll) {
+                        container.scrollLeft -= maxScroll;
+                    } else if (container.scrollLeft <= 0) {
+                        container.scrollLeft += maxScroll;
+                    }
+                }
+                requestAnimationFrame(autoScroll);
+            }
+
+            requestAnimationFrame(autoScroll);
+
+            container.addEventListener('mousedown', (e) => {
+                isDown = true;
+                container.classList.add('active');
+                startX = e.pageX - container.offsetLeft;
+                scrollLeft = container.scrollLeft;
+            });
+
+            container.addEventListener('mouseleave', () => {
+                isDown = false;
+                container.classList.remove('active');
+            });
+
+            container.addEventListener('mouseup', () => {
+                isDown = false;
+                container.classList.remove('active');
+            });
+
+            container.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - container.offsetLeft;
+                const walk = (x - startX) * 2;
+                container.scrollLeft = scrollLeft - walk;
+
+                const maxScroll = container.scrollWidth / 2;
+                if (container.scrollLeft >= maxScroll) {
+                    container.scrollLeft -= maxScroll;
+                    startX = x;
+                    scrollLeft = container.scrollLeft;
+                } else if (container.scrollLeft <= 0) {
+                    container.scrollLeft += maxScroll;
+                    startX = x;
+                    scrollLeft = container.scrollLeft;
+                }
+            });
+        }
+
         // Function to update active link indicator line under navbar items & handle home icon styling / custom footer visibility
         function updateActiveNavIndicator(targetId) {
             const homeIcon = document.querySelector('a.nav-link[href="#about"]');
@@ -1118,7 +1180,7 @@
             });
         });
 
-        // Initialize active indicator on initial load (About page active by default)
+        // Initialize active indicator & carousels on initial load
         document.addEventListener('DOMContentLoaded', () => {
             updateActiveNavIndicator('#about');
             setupDragAndAutoScroll('edu-carousel');
