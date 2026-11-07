@@ -1,1 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f7f8;--card:#fff;--ink:#17212b;--mute:#5d6b78;--line:#dde3e8;--brand:#0b6e6e;--brand-d:#085454;--bkash:#e2136e;--nagad:#f26522;--ok:#1a7f45;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#101619;--card:#182126;--ink:#eaf0f3;--mute:#98a7b2;--line:#2a373e;--brand:#38b2ac;--brand-d:#2c968f;--ok:#4cc380;color-scheme:dark}}
+*{box-sizing:border-box}
+html{scroll-padding-top:70px}
+body{margin:0;font-family:"Hind Siliguri",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+header{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;padding:10px 16px}
+.logo{font-weight:700;font-size:1.35rem;letter-spacing:-.01em;margin-right:auto}
+.search{flex:1;max-width:380px;padding:9px 14px;border:1px solid var(--line);border-radius:999px;background:var(--bg)}
+.cartbtn{border:0;background:var(--brand);color:#fff;padding:9px 16px;border-radius:999px;font-weight:600}
+.cartbtn b{background:#fff;color:var(--brand-d);border-radius:999px;padding:0 8px;margin-left:6px}
+.hero{padding:44px 16px 28px;max-width:1100px;margin:auto}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin:0 0 10px;letter-spacing:-.02em;max-width:16ch}
+.hero p{color:var(--mute);margin:0;max-width:52ch}
+.chips{max-width:1100px;margin:0 auto;padding:0 16px 8px;display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--card);padding:6px 14px;border-radius:999px}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+main{max-width:1100px;margin:auto;padding:12px 16px 60px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{aspect-ratio:1/1;display:grid;place-items:center;font-size:3.4rem;font-weight:700;color:rgba(255,255,255,.9);background-size:cover;background-position:center}
+.card .body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card h3{margin:0;font-size:1.02rem;font-weight:600}
+.card .desc{color:var(--mute);font-size:.88rem;flex:1}
+.price{font-weight:700;font-size:1.1rem}
+.price s{color:var(--mute);font-weight:400;font-size:.9rem;margin-left:6px}
+.add{margin-top:8px;border:1px solid var(--brand);background:transparent;color:var(--brand);padding:8px;border-radius:8px;font-weight:600}
+.add:hover{background:var(--brand);color:#fff}
+.add:disabled{opacity:.5;cursor:not-allowed}
+.empty{color:var(--mute);padding:40px 0;text-align:center}
+footer{border-top:1px solid var(--line);padding:24px 16px;text-align:center;color:var(--mute);font-size:.9rem}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:40}
+.overlay.open{display:block}
+.drawer{position:absolute;right:0;top:0;bottom:0;width:min(420px,100%);background:var(--card);display:flex;flex-direction:column}
+.drawer>header{position:static;justify-content:space-between}
+.drawer h2{margin:0;font-size:1.15rem}
+.x{border:0;background:none;font-size:1.6rem;line-height:1}
+.items{flex:1;overflow:auto;padding:8px 16px}
+.row{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.row .mini{width:48px;height:48px;border-radius:8px;display:grid;place-items:center;color:#fff;font-weight:700;background-size:cover;background-position:center;flex:none}
+.row .nm{flex:1;font-weight:500}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:var(--bg)}
+.foot{padding:14px 16px;border-top:1px solid var(--line)}
+.tot{display:flex;justify-content:space-between;font-weight:700;font-size:1.1rem;margin-bottom:10px}
+.btn{width:100%;border:0;background:var(--brand);color:#fff;padding:12px;border-radius:8px;font-weight:700;font-size:1rem}
+.btn:hover{background:var(--brand-d)}
+.modal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,94%);max-height:92vh;overflow:auto;background:var(--card);border-radius:12px;padding:20px}
+.modal h2{margin:0 0 12px}
+label{display:block;font-weight:500;font-size:.92rem;margin:10px 0 4px}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.pay{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pay label{margin:0;border:2px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center;font-weight:700;cursor:pointer}
+.pay input{position:absolute;opacity:0;width:0}
+.pay input:checked+span{display:block}
+.pay label:has(input:checked){border-color:var(--c);background:color-mix(in srgb,var(--c) 10%,transparent)}
+.pay label:has(input:focus-visible){outline:3px solid var(--brand)}
+.pinfo{margin-top:10px;padding:12px;border-radius:10px;border:1px dashed var(--c,var(--line));font-size:.93rem}
+.pinfo .num{font-size:1.3rem;font-weight:700;letter-spacing:.03em}
+.copy{margin-left:8px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:2px 10px;font-size:.85rem}
+.sum{background:var(--bg);border-radius:8px;padding:10px 12px;margin-top:12px;font-size:.95rem}
+.sum div{display:flex;justify-content:space-between}
+.err{color:#d33;font-size:.9rem;margin-top:8px;min-height:1.2em}
+.hidden{display:none}
+.done{text-align:center;padding:10px 0}
+.done .tick{font-size:3rem;color:var(--ok)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" id="shopName"></div>
+  <input class="search" id="q" type="search" placeholder="Search products" aria-label="Search products">
+  <button class="cartbtn" id="openCart">Cart<b id="count">0</b></button>
+</header>
+
+<section class="hero">
+  <h1 id="tagline"></h1>
+  <p id="sub"></p>
+</section>
+<div class="chips" id="chips"></div>
+<main><div class="grid" id="grid"></div><div class="empty hidden" id="none">No products match your search.</div></main>
+<footer id="foot"></footer>
+
+<!-- Cart -->
+<div class="overlay" id="cartOv"><aside class="drawer" role="dialog" aria-label="Cart">
+  <header><h2>Your cart</h2><button class="x" data-close aria-label="Close cart">&times;</button></header>
+  <div class="items" id="items"></div>
+  <div class="foot"><div class="tot"><span>Subtotal</span><span id="sub2">৳0</span></div>
+  <button class="btn" id="toCheckout">Checkout</button></div>
+</aside></div>
+
+<!-- Checkout -->
+<div class="overlay" id="coOv"><div class="modal" role="dialog" aria-label="Checkout">
+  <div id="coForm">
+    <div style="display:flex;justify-content:space-between"><h2>Checkout</h2><button class="x" data-close aria-label="Close">&times;</button></div>
+    <label for="name">Full name</label><input id="name" autocomplete="name">
+    <label for="phone">Phone number</label><input id="phone" type="tel" inputmode="tel" placeholder="01XXXXXXXXX" autocomplete="tel">
+    <label for="addr">Delivery address</label><textarea id="addr" rows="2" autocomplete="street-address"></textarea>
+    <label for="area">Delivery area</label><select id="area"></select>
+    <label>Payment method</label>
+    <div class="pay" id="payOpts"></div>
+    <div class="pinfo hidden" id="pinfo"></div>
+    <div class="sum" id="sum"></div>
+    <div class="err" id="err" role="alert"></div>
+    <button class="btn" id="place">Place order</button>
+  </div>
+  <div class="done hidden" id="coDone"></div>
+</div></div>
+
+<script>
+/* ============ EDIT THIS SECTION ============ */
+const CONFIG = {
+  shopName: "My Shop",
+  tagline: "Quality products, delivered across Bangladesh",
+  subtitle: "Pay with bKash, Nagad or cash on delivery.",
+  whatsapp: "8801XXXXXXXXX",         // your WhatsApp number, country code first, no + or spaces
+  bkashNumber: "01XXXXXXXXX",        // your bKash (Personal / Merchant) number
+  nagadNumber: "01XXXXXXXXX",        // your Nagad number
+  codEnabled: true,
+  delivery: [ {label:"Inside Dhaka", fee:60}, {label:"Outside Dhaka", fee:120} ],
+  formEndpoint: "",                  // optional: Formspree URL like https://formspree.io/f/xxxxxxx
+  footer: "© My Shop · Dhaka, Bangladesh"
+};
+// image: path to a file in your repo (e.g. "images/shirt.jpg") or leave "" for a colour tile
+const PRODUCTS = [
+  {id:1, name:"Cotton T-Shirt", price:550, oldPrice:700, category:"Clothing", desc:"Soft 100% cotton, regular fit.", image:"", stock:25},
+  {id:2, name:"Panjabi", price:1650, category:"Clothing", desc:"Festive embroidered panjabi.", image:"", stock:10},
+  {id:3, name:"Leather Wallet", price:850, oldPrice:1000, category:"Accessories", desc:"Genuine leather, 6 card slots.", image:"", stock:15},
+  {id:4, name:"Wireless Earbuds", price:1450, category:"Electronics", desc:"Bluetooth 5.3, 20h battery.", image:"", stock:8},
+  {id:5, name:"Power Bank 10000mAh", price:1250, category:"Electronics", desc:"Fast charge, dual USB.", image:"", stock:0},
+  {id:6, name:"Water Bottle", price:420, category:"Accessories", desc:"Steel, keeps drinks cold for 12h.", image:"", stock:30}
+];
+/* ============================================ */
+
+const $=id=>document.getElementById(id);
+const tk=n=>"৳"+n.toLocaleString("en-US");
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const hues=[190,340,30,260,150,10,215,290];
+const tile=p=>p.image?`background-image:url('${encodeURI(p.image)}')`:`background:hsl(${hues[p.id%hues.length]} 45% 42%)`;
+const tileTxt=p=>p.image?"":esc(p.name[0]);
+
+let cart={}; try{cart=JSON.parse(localStorage.getItem("cart")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("cart",JSON.stringify(cart))}catch(e){}};
+let cat="All";
+
+document.title=CONFIG.shopName;
+$("shopName").textContent=CONFIG.shopName; $("tagline").textContent=CONFIG.tagline;
+$("sub").textContent=CONFIG.subtitle; $("foot").textContent=CONFIG.footer;
+
+/* ---- Products ---- */
+function renderChips(){
+  const cats=["All",...new Set(PRODUCTS.map(p=>p.category))];
+  $("chips").innerHTML=cats.map(c=>`<button class="chip" aria-pressed="${c===cat}" data-c="${esc(c)}">${esc(c)}</button>`).join("");
+}
+function renderGrid(){
+  const q=$("q").value.trim().toLowerCase();
+  const list=PRODUCTS.filter(p=>(cat==="All"||p.category===cat)&&(p.name+p.desc).toLowerCase().includes(q));
+  $("none").classList.toggle("hidden",list.length>0);
+  $("grid").innerHTML=list.map(p=>`
+  <article class="card">
+    <div class="thumb" style="${tile(p)}" role="img" aria-label="${esc(p.name)}">${tileTxt(p)}</div>
+    <div class="body"><h3>${esc(p.name)}</h3><div class="desc">${esc(p.desc)}</div>
+    <div class="price">${tk(p.price)}${p.oldPrice?`<s>${tk(p.oldPrice)}</s>`:""}</div>
+    <button class="add" data-add="${p.id}" ${p.stock<1?"disabled":""}>${p.stock<1?"Out of stock":"Add to cart"}</button></div>
+  </article>`).join("");
+}
+$("chips").onclick=e=>{const c=e.target.dataset.c; if(!c)return; cat=c; renderChips(); renderGrid();};
+$("q").oninput=renderGrid;
+$("grid").onclick=e=>{const id=e.target.dataset.add; if(id){change(+id,1); openOv("cartOv");}};
+
+/* ---- Cart ---- */
+const find=id=>PRODUCTS.find(p=>p.id===id);
+const subtotal=()=>Object.entries(cart).reduce((s,[id,q])=>s+find(+id).price*q,0);
+function change(id,d){
+  const p=find(id); const n=Math.max(0,Math.min(p.stock,(cart[id]||0)+d));
+  if(n) cart[id]=n; else delete cart[id];
+  save(); renderCart();
+}
+function renderCart(){
+  Object.keys(cart).forEach(id=>{if(!find(+id))delete cart[id]});
+  const ids=Object.keys(cart);
+  $("count").textContent=ids.reduce((s,i)=>s+cart[i],0);
+  $("items").innerHTML=ids.length?ids.map(i=>{const p=find(+i);return `
+    <div class="row"><div class="mini" style="${tile(p)}">${tileTxt(p)}</div>
+    <div class="nm">${esc(p.name)}<div style="color:var(--mute);font-size:.88rem">${tk(p.price)}</div></div>
+    <div class="qty"><button data-d="-1" data-i="${i}" aria-label="Decrease">−</button><span>${cart[i]}</span><button data-d="1" data-i="${i}" aria-label="Increase">+</button></div></div>`}).join(""):'<div class="empty">Your cart is empty. Add something you like.</div>';
+  $("sub2").textContent=tk(subtotal());
+  $("toCheckout").disabled=!ids.length;
+}
+$("items").onclick=e=>{if(e.target.dataset.i)change(+e.target.dataset.i,+e.target.dataset.d)};
+
+/* ---- Overlays ---- */
+function openOv(id){$(id).classList.add("open")}
+function closeAll(){document.querySelectorAll(".overlay").forEach(o=>o.classList.remove("open"))}
+$("openCart").onclick=()=>openOv("cartOv");
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=closeAll);
+document.querySelectorAll(".overlay").forEach(o=>o.addEventListener("click",e=>{if(e.target===o)closeAll()}));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAll()});
+
+/* ---- Checkout ---- */
+const METHODS=[{k:"bkash",n:"bKash",c:"#e2136e",num:CONFIG.bkashNumber},{k:"nagad",n:"Nagad",c:"#f26522",num:CONFIG.nagadNumber}];
+if(CONFIG.codEnabled)METHODS.push({k:"cod",n:"Cash on delivery",c:"#0b6e6e"});
+$("payOpts").style.gridTemplateColumns=`repeat(${METHODS.length},1fr)`;
+$("payOpts").innerHTML=METHODS.map((m,i)=>`<label style="--c:${m.c}"><input type="radio" name="pay" value="${m.k}" ${i===0?"checked":""}>${m.n}</label>`).join("");
+$("area").innerHTML=CONFIG.delivery.map((d,i)=>`<option value="${i}">${esc(d.label)} (${tk(d.fee)})</option>`).join("");
+
+const method=()=>METHODS.find(m=>m.k===document.querySelector("input[name=pay]:checked").value);
+const fee=()=>CONFIG.delivery[+$("area").value].fee;
+const total=()=>subtotal()+fee();
+
+function renderPay(){
+  const m=method(), box=$("pinfo"); box.style.setProperty("--c",m.c);
+  if(m.k==="cod"){box.classList.add("hidden");}
+  else{
+    box.classList.remove("hidden");
+    box.innerHTML=`<div>1. Open ${m.n} and choose <b>Send Money</b> to:</div>
+      <div><span class="num">${esc(m.num)}</span><button type="button" class="copy" id="copyNum">Copy</button></div>
+      <div>2. Send exactly <b>${tk(total())}</b>.</div>
+      <div>3. Enter the number you paid from and the Transaction ID (TrxID):</div>
+      <label for="payFrom">Your ${m.n} number</label><input id="payFrom" type="tel" inputmode="tel" placeholder="01XXXXXXXXX">
+      <label for="trx">Transaction ID (TrxID)</label><input id="trx" placeholder="e.g. 9H7A5B2C1D" autocapitalize="characters">`;
+    $("copyNum").onclick=()=>{navigator.clipboard?.writeText(m.num);$("copyNum").textContent="Copied"};
+  }
+}
+function renderSum(){
+  $("sum").innerHTML=`<div><span>Subtotal</span><span>${tk(subtotal())}</span></div>
+   <div><span>Delivery</span><span>${tk(fee())}</span></div>
+   <div style="font-weight:700;margin-top:4px"><span>Total</span><span>${tk(total())}</span></div>`;
+}
+function refresh(){renderSum();renderPay()}
+$("payOpts").onchange=refresh; $("area").onchange=refresh;
+
+$("toCheckout").onclick=()=>{
+  closeAll(); $("coForm").classList.remove("hidden"); $("coDone").classList.add("hidden");
+  $("err").textContent=""; refresh(); openOv("coOv");
+};
+
+$("place").onclick=async()=>{
+  const name=$("name").value.trim(), phone=$("phone").value.trim(), addr=$("addr").value.trim(), m=method();
+  const bdPhone=/^(\+?88)?01[3-9]\d{8}$/;
+  let err="";
+  if(!name)err="Enter your name.";
+  else if(!bdPhone.test(phone))err="Enter a valid Bangladeshi mobile number, like 01712345678.";
+  else if(!addr)err="Enter your delivery address.";
+  if(!err&&m.k!=="cod"){
+    const from=$("payFrom").value.trim(), trx=$("trx").value.trim();
+    if(!bdPhone.test(from))err=`Enter the ${m.n} number you paid from.`;
+    else if(trx.length<6)err="Enter the Transaction ID (TrxID) from your payment confirmation.";
+  }
+  if(err){$("err").textContent=err;return}
+
+  const id="ORD"+Date.now().toString(36).toUpperCase();
+  const lines=Object.entries(cart).map(([i,q])=>`- ${find(+i).name} x${q} = ${tk(find(+i).price*q)}`);
+  const order={id,name,phone,address:addr,area:CONFIG.delivery[+$("area").value].label,
+    payment:m.n,paidFrom:m.k==="cod"?"":$("payFrom").value.trim(),trxId:m.k==="cod"?"":$("trx").value.trim(),
+    items:lines.join("\n"),delivery:fee(),total:total()};
+  const msg=`New order ${id}\nName: ${name}\nPhone: ${phone}\nAddress: ${addr} (${order.area})\n\nItems:\n${order.items}\n\nDelivery: ${tk(order.delivery)}\nTotal: ${tk(order.total)}\nPayment: ${m.n}`+
+    (m.k==="cod"?" (pay on delivery)":`\nPaid from: ${order.paidFrom}\nTrxID: ${order.trxId}`);
+
+  if(CONFIG.formEndpoint){
+    try{await fetch(CONFIG.formEndpoint,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(order)})}catch(e){}
+  }
+  const wa=`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+  cart={}; save(); renderCart();
+  $("coForm").classList.add("hidden");
+  $("coDone").classList.remove("hidden");
+  $("coDone").innerHTML=`<div class="tick">✓</div><h2>Order ${esc(id)} received</h2>
+    <p>${m.k==="cod"?"Please confirm your order by sending it on WhatsApp.":"Please send your order details on WhatsApp so we can verify your payment and ship."}</p>
+    <a class="btn" style="display:block;text-decoration:none" href="${wa}" target="_blank" rel="noopener">Send order on WhatsApp</a>
+    <p><button class="chip" data-close2>Continue shopping</button></p>`;
+  document.querySelector("[data-close2]").onclick=closeAll;
+  window.open(wa,"_blank","noopener");
+};
+
+renderChips(); renderGrid(); renderCart();
+</script>
+</body>
+</html>
 
